@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30.836" height="14.401" viewBox="0 0 30.836 14.401">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: rgba(255,255,255,0.39);
+      }
+
+      .cls-2 {
+        stroke: #fff;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="fowler-flap" transform="translate(123.693 -57.184) rotate(-13)">
+    <path id="path2333" class="cls-1" d="M52.906,27.144c0,3.268-9.388.007-27.833,1.015C35.978,20.431,52.906,21.726,52.906,27.144Z" transform="translate(-158.973 12.71)"/>
+    <path id="path2334" class="cls-2" d="M43.075,22.729c5.594.035,9.825,1.71,9.825,4.416s-6.39.948-18.972.819c.3-.052.446-.144.443-.3-.02-1.165-5.681-1.277-9.3.492A31.918,31.918,0,0,1,43.075,22.729Zm-18,5.429Z" transform="translate(-158.971 12.702)"/>
+  </g>
+</svg>

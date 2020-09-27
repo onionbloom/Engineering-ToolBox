@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+  <!-- Bokeh CSS -->
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../static/css/custom.css">
+
+  <title>Engineering Toolbox - {{ title }}</title>
+</head>
+
+<body>
+
+  <div id="mainContainer" class="accordion container-fluid d-flex flex-row">
+    <ul id="accordionExample" class="nav flex-column sidebar">
+      <a class="sidebar-head d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-head-title">Engineering Toolbox</div>
+      </a> <!-- Sidebar Header-->
+      <a class="sidebar-profile d-flex align-items-center justify-content-center" href="profile.html">
+        <img class="rounded-circle" src="https://via.placeholder.com/100x100" alt="Profile Picture">
+      </a>
+      <hr class="sidebar-divider my-0"> <!-- Sidebar Divider -->
+      <li class="nav-item">
+        {% if title == 'Dashboard' %}
+        <a class="nav-link  {{ active }}" href="">
+          {% else %}
+          <a href="" class="nav-link">
+            {% endif %}
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+      </li> <!-- Dashboard -->
+      <hr class="sidebar-divider"> <!-- Sidebar Divider -->
+      <div class="sidebar-heading">TOOLBOX</div> <!-- Sidebar Heading -->
+      <li id="listOne" class="nav-item">
+        <a type="button" class="nav-link" data-toggle="collapse" data-target="#collapseFlap" aria-expanded="true"
+          aria-controls="collapseFlap">
+          <svg class="cicon-flap" width="20.3" height="13.6" role="img" fill="currentColor"></svg>
+          <span>Flap Monitoring</span>
+        </a>
+      </li>
+      <div id="collapseFlap" class="card mx-auto collapse show" aria-labelledby="listOne"
+        data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="list-group">
+            <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
+            <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
+          </div>
+        </div>
+      </div>
+      <li id="listTwo" class="nav-item">
+        <a href="#" class="nav-link" data-toggle="collapse" data-target="#collapseLand" aria-expanded="false"
+          aria-controls="collapseLand">
+          <i class="fas fa-plane-arrival"></i>
+          <span>Hard Landing</span>
+        </a>
+      </li>
+      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listTwo" data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="list-group">
+            <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
+            <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
+          </div>
+        </div>
+      </div>
+      <li id="listThree" class="nav-item">
+        <a href="#" class="nav-link" data-toggle="collapse" data-target="#collapseECS" aria-expanded="false"
+          aria-controls="collapseECS">
+          <i class="fas fa-thermometer-quarter"></i>
+          <span>ECS Monitoring</span>
+        </a>
+      </li>
+      <div id="collapseECS" class="card mx-auto mb-3 collapse" aria-labelledby="listThree"
+        data-parent="#accordionExample">
+        <div class="card-body">
+          <div class="list-group">
+            <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
+            <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
+          </div>
+        </div>
+      </div>
+      <hr class="sidebar-divider"> <!-- Sidebar Divider -->
+      <div class="sidebar-heading">AIRCRAFT INTEGRATED REPORT</div> <!-- Sidebar Heading -->
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Disabled link</a>
+      </li>
+    </ul> <!-- Sidebar -->
+
+    <div id="contentContainer" class="container-fluid">
+      <nav class="navbar navbar-expand navbar-light" style="background-color: #03045E;">
+        <form id="searchBar" class="form-inline mr-auto">
+          <div class="form-group">
+            <input type="search" class="form-control search-form" placeholder="Search" aria-describedby="helpId">
+            <button type="submit" class="btn btn-primary search-button"><i class="fas fa-search"></i></button>
+          </div>
+        </form>
+
+        <div class="nav navbar-nav">
+          <a class="nav-item nav-link active" href="{{ url_for('login') }}" style="color: rgba(255, 255, 255, .5);">Sign
+            Out
+            <span class="sr-only">(current)</span></a>
+        </div>
+      </nav> <!-- Nav Bar-->
+
+      <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}}" role="alert">
+          <strong> {{message}} </strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+      </div> <!-- Content -->
+
+    </div> <!-- Content Container-->
+
+  </div> <!-- Main Container-->
+
+  <!-- Optional JavaScript -->
+
+  <!-- Bokeh JS -->
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.1.min.js" crossorigin="anonymous"></script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
+  <!-- Font Awesome-->
+  <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js"
+    integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
