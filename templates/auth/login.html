@@ -3,67 +3,77 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div id="introHeader" class="container-fluid">
-  <div class="row mx-auto text-center justify-content-center">
-    <h1 class="display-4">Welcome to Engineering Toolbox</h1>
+<div id="introHeader" class="row d-flex flex-column">
+  <div class="col">
+    <h1 class="display-4 text-center">Welcome to Engineering Toolbox</h1>
   </div>
-  <div class="row justify-content-center">
+  <div class="col">
     <p class="lead text-center">
       Engineering toolbox is where you find , unravel, and explore possibilities <br> to expand your horrizon
     </p>
   </div>
 </div> <!-- Intro header -->
 
+<div id="authCard" class="row justify-content-center mx-auto">
+  <div class="card text-white bg-light">
+    <div class="card-body">
+      <h4 class="card-title">Sign In</h4>
+      <form action="" method="POST">
+        <div class="form-group">
+          {{ form.email.label(class="form-control-label") }}
 
-<div class="card text-white bg-light">
-  <div class="card-body">
-    <h4 class="card-title">Sign In</h4>
-    <form action="" method="POST">
-      <div class="form-group">
-        {{ form.email.label(class="form-control-label") }}
+          {% if form.email.errors %}
+          {{ form.email(class="form-control is-invalid") }}
 
-        {% if form.email.errors %}
-        {{ form.email(class="form-control is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+            <span> {{ error }} </span>
+            {% endfor %}
+          </div>
 
-        <div class="invalid-feedback">
-          {% for error in form.email.errors %}
-          <span> {{ error }} </span>
-          {% endfor %}
+          {% else %}
+
+          {{ form.email(class="form-control") }}
+          <!-- email field validation -->
+          {% endif %}
+          <small id="emailHelpId" class="form-text text-muted">Use your corporate email.</small>
         </div>
+        <div class="form-group">
+          {{ form.password.label(class="form-control-label") }}
 
-        {% else %}
+          {% if form.password.errors %}
+          {{ form.password(class="form-control is-invalid") }}
 
-        {{ form.email(class="form-control") }}
-        <!-- email field validation -->
-        {% endif %}
-        <small id="emailHelpId" class="form-text text-muted">Use your corporate email.</small>
-      </div>
-      <div class="form-group">
-        {{ form.password.label(class="form-control-label") }}
+          <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+            <span> {{ error }} </span>
+            {% endfor %}
+          </div>
+          {% else %}
 
-        {% if form.password.errors %}
-        {{ form.password(class="form-control is-invalid") }}
+          {{ form.password(class="form-control") }}
 
-        <div class="invalid-feedback">
-          {% for error in form.password.errors %}
-          <span> {{ error }} </span>
-          {% endfor %}
+          {% endif %}
         </div>
-        {% else %}
-
-        {{ form.password(class="form-control") }}
-
-        {% endif %}
-      </div>
-      <div class="form-group text-center">
-        {{ form.submit(class="btn") }}
-      </div>
-      <div class="border-top pt-2 mt-3">
-        <small class="text-muted">
-          Need an account? <a href="{{ url_for('register') }}" class="ml-1">Register!</a>
-        </small>
-      </div>
-    </form>
+        <div class="form-group">
+          {{ form.remember(class="form-check-input ml-0")}}
+          {{ form.remember.label(class="form-check-label ml-3")}}
+        </div>
+        <div class="form-group text-center">
+          {{ form.submit(class="btn mb-0") }}
+          <small class="form-text text-muted mx-auto">
+            <a href="#">Reset password!</a>
+          </small>
+        </div>
+        <div class="border-top pt-2 mt-3">
+          <small class="text-muted">
+            Need an account? <a href="{{ url_for('register') }}" class="ml-1">Register!</a>
+          </small>
+        </div>
+      </form>
+    </div>
   </div>
+
+
 </div> <!-- Sign in card -->
 {% endblock %}

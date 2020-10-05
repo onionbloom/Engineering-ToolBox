@@ -22,7 +22,7 @@
 
   <div id="mainContainer" class="accordion container-fluid d-flex flex-row">
     <ul id="accordionExample" class="nav flex-column sidebar">
-      <a class="sidebar-head d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-head d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
         <div class="sidebar-head-title">Engineering Toolbox</div>
       </a> <!-- Sidebar Header-->
       <a class="sidebar-profile d-flex align-items-center justify-content-center" href="profile.html">
@@ -31,9 +31,9 @@
       <hr class="sidebar-divider my-0"> <!-- Sidebar Divider -->
       <li class="nav-item">
         {% if title == 'Dashboard' %}
-        <a class="nav-link  {{ active }}" href="">
+        <a class="nav-link  {{ active }}" href="{{ url_for('dashboard') }}">
           {% else %}
-          <a href="" class="nav-link">
+          <a href="{{ url_for('dashboard') }}" class="nav-link">
             {% endif %}
             <i class="fas fa-tachometer-alt"></i>
             <span>Dashboard</span>
@@ -42,17 +42,26 @@
       <hr class="sidebar-divider"> <!-- Sidebar Divider -->
       <div class="sidebar-heading">TOOLBOX</div> <!-- Sidebar Heading -->
       <li id="listOne" class="nav-item">
-        <a type="button" class="nav-link" data-toggle="collapse" data-target="#collapseFlap" aria-expanded="true"
-          aria-controls="collapseFlap">
-          <svg class="cicon-flap" width="20.3" height="13.6" role="img" fill="currentColor"></svg>
-          <span>Flap Monitoring</span>
-        </a>
+        {% if title == 'Flap Event Analysis' %}
+        <a type="button" class="nav-link {{ active }}" data-toggle="collapse" data-target="#collapseFlap"
+          aria-expanded="true" aria-controls="collapseFlap">
+          {% else %}
+          <a type="button" class="nav-link" data-toggle="collapse" data-target="#collapseFlap" aria-expanded="true"
+            aria-controls="collapseFlap">
+            {% endif %}
+            <svg class="cicon-flap" width="20.3" height="13.6" role="img" fill="currentColor"></svg>
+            <span>Flap Monitoring and Analysis</span>
+          </a>
       </li>
       <div id="collapseFlap" class="card mx-auto collapse show" aria-labelledby="listOne"
         data-parent="#accordionExample">
         <div class="card-body">
           <div class="list-group">
-            <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
+            {% if title == 'Flap Event Analysis' %}
+            <button type='button' class="btn btn-primary btn-lg border-0 {{ active }}">Create Report</button>
+            {% else %}
+            <a href="{{ url_for('flapapp') }}" type="button" class="btn btn-primary btn-lg border-0">Create Report</a>
+            {% endif %}
             <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
           </div>
         </div>

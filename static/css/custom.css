@@ -5,6 +5,10 @@
   padding-bottom: 65px;
 }
 
+#authCard {
+  padding-bottom: 151px;
+}
+
 #authCard .card{
   width: 430px;
   border-radius: 29px;

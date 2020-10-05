@@ -22,13 +22,19 @@ app.config['SECRET_KEY'] = 'R3YU9hssXvaBWT9R'
 
 @app.route('/', methods=['GET', 'POST'])
 # Routing to the index page (when signed in)
-def index():
+def dashboard():
     form = FileSelect(request.form)
     plot = petal_sepal_scatter(df)
     script, div = components(plot)
     if request.method == 'POST' and form.validate():
         flash(f'The file you selected was: {form.file.data}!', 'success')
-    return render_template('index.html', active='active', title='Dashboard', form=form, script=script, div=div)
+    return render_template('dashboard.html', active='active', title='Dashboard', form=form, script=script, div=div)
+
+
+@app.route('/Flap-Application', methods=['GET', 'POST'])
+def flapapp():
+
+    return render_template('flapapp.html', active='active', title='Flap Event Analysis')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -37,7 +43,7 @@ def register():
     form = RegistrationForm(request.form)
     if request.method == 'POST' and form.validate():
         flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard'))
     return render_template('auth/register.html', title='Register', form=form)
 
 
@@ -47,7 +53,10 @@ def login():
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         flash('Welcome back, brave engineer! This is your dashboard.', 'success')
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Unsuccessful login. If you already have an account, please verify correct email and password.', 'danger')
+
     return render_template('/auth/login.html', title='Login', form=form)
 
 
