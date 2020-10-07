@@ -28,7 +28,7 @@ def dashboard():
     script, div = components(plot)
     if request.method == 'POST' and form.validate():
         flash(f'The file you selected was: {form.file.data}!', 'success')
-    return render_template('dashboard.html', active='active', title='Dashboard', form=form, script=script, div=div)
+    return render_template('dashboard.html', active='active', title='Dashboard', form=form, script=script, div=div, plotTitle=plot.title.text)
 
 
 @app.route('/Flap-Application', methods=['GET', 'POST'])

@@ -2,6 +2,86 @@
 
 {% block content %}
 
+<div class="row mx-auto mb-4">
+  <h1 class="h3">Dashboard</h1>
+</div>
+
+<div class="row">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary h-100">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <small class="text-primary-new text-uppercase font-weight-bold mb-1">Flap Asymmetry</small>
+            <div class="h5">####</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-balance-scale-left fa-2x text-black-30"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Flap Asymmetry Notif Card -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success h-100">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <small class="text-success-new text-uppercase font-weight-bold mb-1">ECS Monitoring</small>
+            <div class="h5">####</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-thermometer-full fa-2x text-black-30"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- ECS Monitoring Notif Card -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning h-100">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <small class="text-warning-new text-uppercase font-weight-bold mb-1">IRU Drift</small>
+            <div class="h5">####</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-compass fa-2x text-black-30"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- IRU Drift Notif Card -->
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-danger h-100">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <small class="text-danger-new text-uppercase font-weight-bold mb-1">Bleed Monitoring</small>
+            <div class="h5">####</div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-wind fa-2x text-black-30"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- Bleed Monitoring Notif Card -->
+</div>
+
+<div class="row">
+  <div class="col-lg-8 col-xl-7">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="font-weight-bold text-primary-new m-0">{{ plotTitle }}</h6>
+      </div>
+      <div class="card-body">
+        {{ div | safe }}
+      </div>
+    </div>
+  </div>
+</div>
+
 <form action="" method="post">
   <div class="form-group">
     {{ form.file.label(class='form-control-label') }}
@@ -12,13 +92,6 @@
     {{ form.submit(class='btn') }}
   </div>
 </form>
-
-<div class="row mt-5">
-  <div class="col">
-    {{ div | safe }}
-  </div>
-</div>
-
 
 {{ script | safe }}
 {% endblock %}

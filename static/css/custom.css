@@ -62,7 +62,7 @@
 
 .sidebar {
   width: 20rem;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #0077B6;
   background-image: linear-gradient(180deg,#0096C7 10%,#0077B6 100%);
   color: whitesmoke;
@@ -161,3 +161,46 @@
   border-radius: 0px 5px 5px 0px;
 }
 
+.border-left-primary {
+  border-left: 0.25rem solid #118AB2 !important;
+}
+
+.text-primary-new {
+  color: #118AB2;
+}
+
+.border-left-warning {
+  border-left: 0.25rem solid #FFD166 !important;
+}
+
+.text-warning-new {
+  color: #FFD166;
+}
+
+.border-left-success {
+  border-left: 0.25rem solid #06D6A0 !important;
+}
+
+.text-success-new {
+  color: #06D6A0;
+}
+
+.border-left-danger {
+  border-left: 0.25rem solid #EF476F !important;
+}
+
+.text-danger-new {
+  color: #EF476F;
+}
+
+.border-left-light {
+  border-left: 0.25rem solid #ECF9FD !important;
+}
+
+.text-light-new {
+  color: #ECF9FD;
+}
+
+.text-black-30 {
+  color: rgba(0,0,0,.3) !important;
+}

@@ -16,9 +16,9 @@ def petal_sepal_scatter(dataframe):
                                     palette=['#247ba0', '#f25f5c', '#ffe066'])
 
     source = ColumnDataSource(dataframe)
-    plot = figure(title='Petal Length Against Sepal Length',
-                  tools=[hover, 'pan', 'box_zoom', 'reset'],
+    plot = figure(title='Petal Length Against Sepal Length', tools=[hover, 'pan', 'box_zoom', 'reset'],
                   x_axis_label='Petal Length', y_axis_label='Sepal Length')
+
     plot.circle('petal_length', 'sepal_length', source=source, size=10,
                 color={'field': 'species', 'transform': mapper}, alpha=0.8)
 

@@ -13,7 +13,7 @@ chart_title_alignment = 'center'
 axis_label_font_style = 'normal'
 axis_label_size = '12pt'
 axis_ticks_size = '12pt'
-default_padding = 30
+default_padding = 10
 chart_inner_left_padding = 0.15
 
 
@@ -25,10 +25,6 @@ def palette_generator(length):
 
 
 def plot_styler(plot):
-    plot.title.text_font_size = chart_title_font_size
-    plot.title.text_font = chart_font
-    plot.title.align = chart_title_alignment
-    plot.title.text_font_style = chart_title_font_style
     plot.x_range.range_padding = chart_inner_left_padding
     plot.xaxis.axis_label_text_font = chart_font
     plot.xaxis.major_label_text_font = chart_font
@@ -42,4 +38,8 @@ def plot_styler(plot):
     plot.yaxis.axis_label_standoff = default_padding
     plot.yaxis.major_label_text_font = chart_font
     plot.yaxis.major_label_text_font_size = axis_label_size
+    # "stretch_both" allows the plot elements to be completely responsive
+    plot.sizing_mode = "stretch_both"
+    # Hiding the logo and figure title so that the title may be generated and styled at front-end
     plot.toolbar.logo = None
+    plot.title_location = None
