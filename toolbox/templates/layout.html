@@ -42,7 +42,7 @@
       <hr class="sidebar-divider"> <!-- Sidebar Divider -->
       <div class="sidebar-heading">TOOLBOX</div> <!-- Sidebar Heading -->
       <li id="listOne" class="nav-item">
-        {% if title == 'Flap Event Analysis' %}
+        {% if title == 'Flap Event Analysis - Create Report' %}
         <a type="button" class="nav-link {{ active }}" data-toggle="collapse" data-target="#collapseFlap"
           aria-expanded="true" aria-controls="collapseFlap">
           {% else %}
@@ -57,7 +57,7 @@
         data-parent="#accordionExample">
         <div class="card-body">
           <div class="list-group">
-            {% if title == 'Flap Event Analysis' %}
+            {% if title == 'Flap Event Analysis - Create Report' %}
             <button type='button' class="btn btn-primary btn-lg border-0 {{ active }}">Create Report</button>
             {% else %}
             <a href="{{ url_for('flapapp') }}" type="button" class="btn btn-primary btn-lg border-0">Create Report</a>
@@ -114,13 +114,16 @@
         </form>
 
         <div class="nav navbar-nav">
-          <a class="nav-item nav-link active" href="{{ url_for('login') }}" style="color: rgba(255, 255, 255, .5);">Sign
+          <a class="nav-item nav-link active" href="{{ url_for('logout') }}" style="color: rgba(255, 255, 255, .5);">Sign
             Out
             <span class="sr-only">(current)</span></a>
         </div>
       </nav> <!-- Nav Bar-->
 
       <div class="container-fluid">
+        <div class="row mx-auto mb-4">
+          <h1 class="h3 font-weight-normal">{{ title }}</h1>
+        </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}

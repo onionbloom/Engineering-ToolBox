@@ -1,5 +1,13 @@
 {
   "python.pythonPath": "C:\\Users\\Muhammad Abdurrofiq\\Anaconda2\\envs\\FlapApp\\python.exe",
   "python.linting.pylintEnabled": true,
-  "python.linting.enabled": true
+  "python.linting.enabled": true,
+  "python.linting.pylintArgs": [
+    "--load-plugins",
+    "pylint_flask_sqlalchemy, pylint_flask",
+    "--init-hook",
+    "import sys; sys.path.insert(0,'C:/Users/Muhammad Abdurrofiq/Documents/GitHub/Engineering-ToolBox')",
+    "--errors-only"
+  ],
+  "python.linting.pylintPath": "C:\\Users\\Muhammad Abdurrofiq\\Anaconda2\\envs\\FlapApp\\Scripts\\pylint.exe"
 }

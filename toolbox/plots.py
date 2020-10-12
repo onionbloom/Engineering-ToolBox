@@ -1,9 +1,8 @@
 # This module contains functions that will plot the given data
-
 from bokeh.models import ColumnDataSource, HoverTool, PrintfTickFormatter, CategoricalColorMapper
 from bokeh.plotting import figure
 from bokeh.transform import factor_cmap
-from plotStyle import plot_styler
+from toolbox.plotStyle import plot_styler
 
 
 def petal_sepal_scatter(dataframe):

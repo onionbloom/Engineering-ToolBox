@@ -2,12 +2,8 @@
 
 {% block content %}
 
-<div class="row mx-auto mb-4">
-  <h1 class="h3">Dashboard</h1>
-</div>
-
 <div class="row">
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-lg-6 mb-4">
     <div class="card border-left-primary h-100">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -22,7 +18,7 @@
       </div>
     </div>
   </div> <!-- Flap Asymmetry Notif Card -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-lg-6 mb-4">
     <div class="card border-left-success h-100">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -37,7 +33,7 @@
       </div>
     </div>
   </div> <!-- ECS Monitoring Notif Card -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-lg-6 mb-4">
     <div class="card border-left-warning h-100">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -52,7 +48,7 @@
       </div>
     </div>
   </div> <!-- IRU Drift Notif Card -->
-  <div class="col-xl-3 col-md-6 mb-4">
+  <div class="col-xl-3 col-lg-6 mb-4">
     <div class="card border-left-danger h-100">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
@@ -70,7 +66,7 @@
 </div>
 
 <div class="row">
-  <div class="col-lg-8 col-xl-7">
+  <div class="col-lg-12 col-xl-7 mb-4">
     <div class="card">
       <div class="card-header">
         <h6 class="font-weight-bold text-primary-new m-0">{{ plotTitle }}</h6>
@@ -80,18 +76,17 @@
       </div>
     </div>
   </div>
+  <div class="col-lg-12 col-xl-5 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="font-weight-bold text-primary-new m-0">Plot Title</h6>
+      </div>
+      <div class="card-body">
+
+      </div>
+    </div>
+  </div>
 </div>
-
-<form action="" method="post">
-  <div class="form-group">
-    {{ form.file.label(class='form-control-label') }}
-
-    {{ form.file(class='form-control-file') }}
-  </div>
-  <div class="form-group">
-    {{ form.submit(class='btn') }}
-  </div>
-</form>
 
 {{ script | safe }}
 {% endblock %}

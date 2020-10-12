@@ -55,6 +55,20 @@
   margin-bottom: 26px;
 }
 
+.btn-primary-new {
+  color: aliceblue !important;
+  background-color: #118AB2;
+  border-color: #ECF9FD;
+  border-radius: 20px;
+}
+
+.btn-success-new {
+  color: aliceblue !important;
+  background-color: #06D6A0;
+  border-color: #ECF9FD;
+  border-radius: 20px;
+}
+
 #mainContainer {
   padding-left: 0px;
   padding-right: 0px;
@@ -203,4 +217,14 @@
 
 .text-black-30 {
   color: rgba(0,0,0,.3) !important;
+}
+
+.form-control-file.border {
+  border: 1px solid;
+  border-radius: .25rem;
+}
+
+.form-control-file.is-invalid {
+  border: 1px solid #dc3545;
+  border-radius: .25rem;
 }

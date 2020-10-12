@@ -39,7 +39,8 @@ def plot_styler(plot):
     plot.yaxis.major_label_text_font = chart_font
     plot.yaxis.major_label_text_font_size = axis_label_size
     # "stretch_both" allows the plot elements to be completely responsive
-    plot.sizing_mode = "stretch_both"
+    plot.sizing_mode = "stretch_width"
+    plot.height = 380
     # Hiding the logo and figure title so that the title may be generated and styled at front-end
     plot.toolbar.logo = None
     plot.title_location = None

@@ -1,8 +1,7 @@
-{% extends 'base.html' %}
-
-{% block title %}Login{% endblock %}
+{% extends "base.html" %}
 
 {% block content %}
+
 <div id="introHeader" class="row d-flex flex-column">
   <div class="col">
     <h1 class="display-4 text-center">Welcome to Engineering Toolbox</h1>
@@ -17,8 +16,27 @@
 <div id="authCard" class="row justify-content-center mx-auto">
   <div class="card text-white bg-light">
     <div class="card-body">
-      <h4 class="card-title">Sign In</h4>
+      <h4 class="card-title">Register</h4>
       <form action="" method="POST">
+        {{ form.csrf_token }}
+        <div class="form-group">
+          {{ form.username.label(class="form-control-label") }}
+
+          {% if form.username.errors %}
+          {{ form.username(class="form-control is-invalid") }}
+
+          <div class="invalid-feedback">
+            {% for error in form.username.errors %}
+            <span> {{ error }} </span>
+            {% endfor %}
+          </div>
+          <!-- Check if the username field has any errors, then loop through the errors to indicate what the error is (aka username form validation) -->
+          {% else %}
+
+          {{ form.username(class="form-control") }}
+
+          {% endif %}
+        </div>
         <div class="form-group">
           {{ form.email.label(class="form-control-label") }}
 
@@ -56,24 +74,33 @@
           {% endif %}
         </div>
         <div class="form-group">
-          {{ form.remember(class="form-check-input ml-0")}}
-          {{ form.remember.label(class="form-check-label ml-3")}}
+          {{ form.confirm_password.label(class="form-control-label") }}
+
+          {% if form.confirm_password.errors %}
+          {{ form.confirm_password(class="form-control is-invalid") }}
+
+          <div class="invalid-feedback">
+            {% for error in form.confirm_password.errors %}
+            <span> {{ error }} </span>
+            {% endfor %}
+          </div>
+
+          {% else %}
+
+          {{ form.confirm_password(class="form-control") }}
+
+          {% endif %}
         </div>
         <div class="form-group text-center">
-          {{ form.submit(class="btn mb-0") }}
-          <small class="form-text text-muted mx-auto">
-            <a href="#">Reset password!</a>
-          </small>
-        </div>
-        <div class="border-top pt-2 mt-3">
-          <small class="text-muted">
-            Need an account? <a href="{{ url_for('register') }}" class="ml-1">Register!</a>
-          </small>
+          {{ form.submit(class="btn") }}
         </div>
       </form>
+      <div class="border-top pt-2 mt-3">
+        <small class="text-muted">
+          Already have an account? <a href="{{ url_for('login') }}" class="ml-1">Login!</a>
+        </small>
+      </div>
     </div>
   </div>
-
-
-</div> <!-- Sign in card -->
+</div> <!-- Register card -->
 {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-12 col-xl-7 mb-4">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.file.label(class='form-control-label') }}
+        {% if form.file.errors %}
+        {{ form.file(class='form-control-file is-invalid', accept='.xls,.xlsx,.txt,.csv') }}
+        <div class="invalid-feedback">
+          {% for error in form.file.errors %}
+          <span>{{ error }}</span>
+          {% endfor %}
+        </div><!-- Invalid file upload error message -->
+        {% else %}
+        {{ form.file(class='form-control-file border', accept='.xls,.xlsx,.txt,.csv') }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-success-new") }}
+        {{ eda.submit(class="btn btn-primary-new disabled") }}
+      </div>
+    </form> <!-- Upload Raw .csv Form -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-xl-7 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="font-weight-bold text-primary-new m-0"></h6>
+      </div>
+      <div class="card-body">
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-12 col-xl-5 mb-4 border-left-light d-none d-xl-block">
+    <blockquote class="blockquote">
+      <p class="mb-0">Esse sint culpa cupidatat fugiat duis magna magna non. Dolor non officia non excepteur minim
+        nostrud culpa quis ipsum aliquip fugiat commodo tempor. Et amet minim tempor cupidatat quis reprehenderit cillum
+        qui.</p>
+      <footer class="blockquote-footer"> <cite title="Figure Text">Figure Text</cite></footer>
+    </blockquote>
+  </div>
+</div>
+</div>
+{% endblock %}
