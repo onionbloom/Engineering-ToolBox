@@ -84,8 +84,16 @@ def login():
 
     return render_template('/auth/login.html', title='Login', form=form)
 
+@app.route("/account")
+@login_required
+def account():
+    """ Handles the user's account """
+    image_file = url_for('static', filename='profile_pics/'+ current_user.image_file)
+    return render_template('account.html', title='Account', image_file=image_file)
+
 @app.route("/logout")
 def logout():
+    """ Handles user logout by logging out the user with logout_user function nad redirects the user to the login page """
     logout_user()
     return redirect(url_for('login'))
 
