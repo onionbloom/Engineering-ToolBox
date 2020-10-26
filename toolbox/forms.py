@@ -49,4 +49,4 @@ class UploadForm(FlaskForm):
 
 class LaunchEDA(FlaskForm):
     """ Flask Form to launch the exploratory data analysis """
-    submit = SubmitField('Launch EDA')
+    submit = SubmitField('Launch EDA', id='edaSubmit', _name='edaSubmit')

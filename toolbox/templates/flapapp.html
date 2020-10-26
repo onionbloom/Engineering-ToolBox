@@ -21,18 +21,28 @@
       </div>
       <div class="form-group">
         {{ form.submit(class="btn btn-success-new") }}
-        {{ eda.submit(class="btn btn-primary-new disabled") }}
       </div>
     </form> <!-- Upload Raw .csv Form -->
+    <form action="" method="post">
+      {{ eda.csrf_token }}
+      <div class="form-group">
+        {% if edaLaunchable %}
+        {{ eda.submit(class="btn btn-primary-new") }}
+        {% else %}
+        {{ eda.submit(class="btn btn-primary-new", disabled="") }}
+        {% endif %}
+      </div>
+    </form>
   </div>
 </div>
 <div class="row">
   <div class="col-lg-12 col-xl-7 mb-4">
     <div class="card">
       <div class="card-header">
-        <h6 class="font-weight-bold text-primary-new m-0"></h6>
+        <h6 class="font-weight-bold text-primary-new m-0">{{ plotTitle }}</h6>
       </div>
       <div class="card-body">
+        {{ div | safe }}
       </div>
     </div>
   </div>
@@ -45,5 +55,7 @@
     </blockquote>
   </div>
 </div>
-</div>
+
+
+{{ script | safe }}
 {% endblock %}

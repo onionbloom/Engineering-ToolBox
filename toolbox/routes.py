@@ -1,5 +1,7 @@
 import os
 
+import pandas as pd
+
 from bokeh.embed import components
 from bokeh.sampledata.iris import flowers as df
 
@@ -9,16 +11,14 @@ from werkzeug.utils import secure_filename
 
 from toolbox import app, bcrypt, db
 from toolbox.forms import LaunchEDA, LoginForm, RegistrationForm, UploadForm
-from toolbox.plots import petal_sepal_scatter
+from toolbox.plots import stabTrimPlot
 from toolbox.models import User
 
 
 @app.route('/', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    plot = petal_sepal_scatter(df)
-    script, div = components(plot)
-    return render_template('dashboard.html', active='active', title='Dashboard', script=script, div=div, plotTitle=plot.title.text)
+    return render_template('dashboard.html', active='active', title='Dashboard')
 
 
 @app.route('/Flap-Application', methods=['GET', 'POST'])
@@ -27,20 +27,49 @@ def flapapp():
     # not passing in the data explicitly as Flask-WTF handles passing form data of us
     form = UploadForm()
     eda = LaunchEDA()
-    if form.validate_on_submit() and 'file' in request.files:
-        file = request.files['file']
+    """if form.validate_on_submit() and 'file' in request.files:
+        file = request.files.get('file')
+        # Convert the FileStorage object from the request into a pandas dataframe
+        dataset = pd.read_csv(file)
+        dataset['DATETIME'] = pd.to_datetime(dataset['DATETIME'], format="%f" , infer_datetime_format=True)
+        plot = stabTrimPlot(dataset)
+        script, div = components(plot)
         # secure_filename secures any filename before storing into the system
         filename = secure_filename(file.filename)
+        # Save the selected file into the upload folder
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         if file.filename == '':
             flash('No selected file', 'warning')
-            return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report',
+            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
                                    form=form, eda=eda)
 
-        flash(
-            f'The file {file.filename} was successfully uploaded!', 'success')
-        return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report',
+        flash(f'The file {file.filename} was successfully uploaded!', 'success')
+        return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                               form=form, eda=eda, filename=filename, script=script, div=div, plotTitle=plot.title.text)"""
+    if form.validate_on_submit() and 'file' in request.files:
+        file = request.files.get('file')
+        # Convert the FileStorage object from the request into a pandas dataframe
+        dataset = pd.read_csv(file)
+        dataset['DATETIME'] = pd.to_datetime(dataset['DATETIME'], format="%f" , infer_datetime_format=True)
+        plot = stabTrimPlot(dataset)
+        script, div = components(plot)
+        # secure_filename secures any filename before storing into the system
+        filename = secure_filename(file.filename)
+        # Save the selected file into the upload folder
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        if file.filename == '':
+            flash('No selected file', 'warning')
+            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                                   form=form, eda=eda)
+
+        flash(f'The file {file.filename} was successfully uploaded!', 'success')
+        return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
                                form=form, eda=eda, filename=filename)
+        
+        if eda.is_submitted():
+            flash(f'Your exploratory data analysis is launched')
+            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                               form=form, eda=eda, filename=filename, div=div, script=script, plotTitle=plot.title.text)
 
     return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, eda=eda)
 
@@ -52,8 +81,10 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Generate a 12 bit password hash using bcrypt 
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
+        # Assign a new entry into the User db containing the username, email, and hashed password
         user = User(username=form.username.data, email=form.email.data,
                     password=hashed_password)
         db.session.add(user)

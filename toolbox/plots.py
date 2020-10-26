@@ -5,21 +5,22 @@ from bokeh.transform import factor_cmap
 from toolbox.plotStyle import plot_styler
 
 
-def petal_sepal_scatter(dataframe):
-    hover = HoverTool(tooltips=[('species name', '@species'),
-                                ('petal length', '@petal_length'),
-                                ('sepal legnth', '@sepal_length')
-                                ])
+def stabTrimPlot(dataframe):
+    hover = HoverTool(tooltips=[('altitude', '@ALTITUDE'),
+                                ('time', '@DATETIME{%H:%M:%S}')],
+                                # format time to H:M:S without the date. details: DatetimeTickFormatter
+                                formatters = {'@DATETIME': 'datetime'},
+                                # display a tooltip whenever the cursor is vertically in line with a glyph
+                                mode='vline')
 
     mapper = CategoricalColorMapper(factors=['setosa', 'virginica', 'versicolor'],
                                     palette=['#247ba0', '#f25f5c', '#ffe066'])
 
     source = ColumnDataSource(dataframe)
-    plot = figure(title='Petal Length Against Sepal Length', tools=[hover, 'pan', 'box_zoom', 'reset'],
-                  x_axis_label='Petal Length', y_axis_label='Sepal Length')
+    plot = figure(title='Aircraft Flight Envelope', tools=[hover, 'pan', 'box_zoom', 'reset'],
+                  x_axis_label='UTC Time (hh:mm:ss)', y_axis_label='Aircraft Altitude (ft)', x_axis_type='datetime')
 
-    plot.circle('petal_length', 'sepal_length', source=source, size=10,
-                color={'field': 'species', 'transform': mapper}, alpha=0.8)
+    plot.line('DATETIME', 'ALTITUDE', source=source , line_width=2, color="blue")
 
     plot_styler(plot)
 
