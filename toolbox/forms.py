@@ -47,6 +47,6 @@ class UploadForm(FlaskForm):
     submit = SubmitField('Select File')
 
 
-class LaunchEDA(FlaskForm):
-    """ Flask Form to launch the exploratory data analysis """
-    submit = SubmitField('Launch EDA', id='edaSubmit', _name='edaSubmit')
+class dlCSV(FlaskForm):
+    """ Flask Form to launch the exploratory data analysis, download the clean .csv, and other features """
+    submit = SubmitField('Launch EDA', id='dlCSV', _name='dlCSV')

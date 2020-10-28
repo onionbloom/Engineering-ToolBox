@@ -27,7 +27,8 @@ class DfdrConvert:
         regex_FlightNo = re.findall(r'GIA\d{2,4}', self.raw_dfdr_csv)
         dfdr_data['AC_Reg'] = 'PK-'+regex_AC_REG[0]
         dfdr_data['Date'] = regex_Date[0]
-        dfdr_data['Date'] = pd.to_datetime(dfdr_data['Date'], format='%y%m%d')
+        dfdr_data['Date'] = pd.to_datetime(
+            dfdr_data['Date'], format='%y%m%d').dt.date
         dfdr_data['GMT'] = pd.to_datetime(
             dfdr_data['GMT'], format='%H:%M:%S').dt.time
         dfdr_data['FlightNo'] = regex_FlightNo[-1]
@@ -60,7 +61,10 @@ class DfdrConvert:
         dfdr_data[col_float] = dfdr_data[col_float].astype('float')
 
         # convert back to csv
-        csv_clean = app.config['UPLOAD_FOLDER']+'{registration}_{date}_{flight_no}_cleaned.csv'.format(registration=dfdr_data.loc[1, 'AC_REG'], date=dfdr_data['Date'][0],
-                                                                                                       flight_no=dfdr_data['FlightNo'][0])
+        csv_clean = app.config['UPLOAD_FOLDER'] + '/{registration}_{date}_{flight_no}_cleaned.csv'.format(registration=dfdr_data.loc[1, 'AC_Reg'],
+                                                                                                          date=dfdr_data.loc[1,
+                                                                                                                             'Date'],
+                                                                                                          flight_no=dfdr_data.loc[1, 'FlightNo'])
 
         dfdr_data.to_csv(csv_clean, index=False)
+        self.clean_csv_path = csv_clean

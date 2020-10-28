@@ -10,7 +10,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
 from toolbox import app, bcrypt, db
-from toolbox.forms import LaunchEDA, LoginForm, RegistrationForm, UploadForm
+from toolbox.forms import dlCSV, LoginForm, RegistrationForm, UploadForm
 from toolbox.plots import stabTrimPlot
 from toolbox.models import User
 from toolbox.DFDR_convert_test import DfdrConvert
@@ -27,7 +27,17 @@ def dashboard():
 def flapapp():
     # not passing in the data explicitly as Flask-WTF handles passing form data of us
     form = UploadForm()
-    eda = LaunchEDA()
+    dl = dlCSV()
+
+    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, dl=dl)
+
+
+@app.route('/raw', methods=['POST'])
+def raw():
+    form = UploadForm()
+    dl = dlCSV()
+    dl_path = ''
+
     if form.validate_on_submit() and 'file' in request.files:
         file = request.files.get('file')
         filename = secure_filename(file.filename)
@@ -44,19 +54,26 @@ def flapapp():
 
         dfdr_df = DfdrConvert(file, filename)
         dfdr_df.dfdr_tidy()
+        dl_path = dfdr_df.clean_csv_path
         # Save the selected file into the upload folder
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         if file.filename == '':
             flash('No selected file', 'warning')
             return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                   form=form, eda=eda)
+                                   form=form, dl=dl)
 
         flash(
             f'The file {file.filename} was successfully uploaded!', 'success')
         return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                               form=form, eda=eda, filename=filename)
+                               form=form, dl=dl, filename=filename)
 
-    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, eda=eda)
+    return dl_path
+
+
+@app.route('/download', methods=['POST'])
+def dlclean():
+
+    return redirect(url_for('flapapp'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
