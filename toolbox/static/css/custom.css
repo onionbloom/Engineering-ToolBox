@@ -10,8 +10,11 @@
 }
 
 #authCard .card{
-  width: 430px;
-  border-radius: 29px;
+  width: 371px;
+  border: none;
+  border-radius: 27px;
+  background-color: white !important;
+  box-shadow: 0px 3px 5px 3px rgba(58, 58, 58, 0.16);
 }
 
 #authCard .card .card-body .card-title {
@@ -25,8 +28,56 @@
   padding-top: 2.5rem;
 }
 
-#authCard label {
+#authCard .form-group{
+  height: 50px;
+  position: relative;
+}
+
+#authCard .form-group input.form-control{
+  height: 100%;
+  padding: 23px 0px 0px 0px;
+  border: none;
+  outline: none;
+}
+
+#authCard .form-group input.form-control:focus + label.form-control-label .label-text, 
+#authCard .form-group input.form-control:valid + label.form-control-label .label-text {
+  transform: translateY(-100%);
+}
+
+#authCard .form-group label.form-control-label{
+  position: absolute;
+  bottom: 0px;
+  height: 100%;
+  width: 100%;
   color: #707070;
+  pointer-events: none;
+  border-bottom: 1px solid black;
+  margin: 0px;
+}
+
+.label-text {
+  position: absolute;
+  bottom: 0px;
+  transition: all 0.3s ease;
+}
+
+#authCard .form-group label.form-control-label::after{
+  content: "";
+  position: absolute;
+  left: 45%;
+  bottom: -1px;
+  height: 100%;
+  width: 10%;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#authCard .form-group input.form-control:focus + label.form-control-label::after,
+#authCard .form-group input.form-control:valid + label.form-control-label::after{
+  left: 0px;
+  width: 100%;
+  border-bottom: 3px solid #21709d;
 }
 
 #emailSignIn, #passSignIn {
