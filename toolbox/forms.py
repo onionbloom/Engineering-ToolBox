@@ -34,10 +34,10 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """ Flask Form to handle user login """
-    email = StringField('User Email', validators=[DataRequired(), Email()])
+    email = StringField('User Email', validators=[DataRequired(), Email()],render_kw={"autocomplete":"off"})
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
-    submit = SubmitField('Login', id='buttonSignIn')
+    submit = SubmitField('Continue', id='buttonSignIn')
 
 
 class UploadForm(FlaskForm):

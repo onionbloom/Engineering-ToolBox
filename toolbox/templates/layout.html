@@ -21,59 +21,40 @@
 <body>
 
   <div id="mainContainer" class="accordion container-fluid d-flex flex-row">
-    <ul id="accordionExample" class="nav flex-column sidebar">
-      <a class="sidebar-head d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
-        <div class="sidebar-head-title">Engineering Toolbox</div>
-      </a> <!-- Sidebar Header-->
-      <a class="sidebar-profile d-flex align-items-center justify-content-center" href="profile.html">
-        <img class="rounded-circle" src="https://via.placeholder.com/100x100" alt="Profile Picture">
+    <ul id="accordionExample" class="nav flex-column sidebar" data-highlight-container="highlight-container">
+      <a class="sidebar-logo d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
+        <img src="static/icons/Logo_sidebar.png" alt="Logo">
       </a>
-      <hr class="sidebar-divider my-0"> <!-- Sidebar Divider -->
       <li class="nav-item">
         {% if title == 'Dashboard' %}
-        <a class="nav-link  {{ active }}" href="{{ url_for('dashboard') }}">
+        <a class="nav-link {{ active }} d-flex align-items-center" href="{{ url_for('dashboard') }}">
+          <svg class="cicon-dashboard {{ active }}" height="35" width="35" role="img" fill="currentColor"></svg>
           {% else %}
-          <a href="{{ url_for('dashboard') }}" class="nav-link">
+          <a href="{{ url_for('dashboard') }}" class="nav-link d-flex align-items-center">
+            <svg class="cicon-dashboard" height="35" width="35" role="img" fill="currentColor"></svg>
             {% endif %}
-            <i class="fas fa-tachometer-alt"></i>
             <span>Dashboard</span>
           </a>
       </li> <!-- Dashboard -->
-      <hr class="sidebar-divider"> <!-- Sidebar Divider -->
-      <div class="sidebar-heading">TOOLBOX</div> <!-- Sidebar Heading -->
-      <li id="listOne" class="nav-item">
+      <li class="nav-item">
         {% if title == 'Flap Event Analysis - Create Report' %}
-        <a type="button" class="nav-link {{ active }}" data-toggle="collapse" data-target="#collapseFlap"
-          aria-expanded="true" aria-controls="collapseFlap">
+        <a class="nav-link {{ active }} d-flex align-items-center" href="{{ url_for('flapapp') }}">
+          <svg class="cicon-dashboard {{ active }}" height="35" width="35" role="img" fill="currentColor"></svg>
           {% else %}
-          <a type="button" class="nav-link" data-toggle="collapse" data-target="#collapseFlap" aria-expanded="true"
-            aria-controls="collapseFlap">
+          <a href="{{ url_for('flapapp') }}" class="nav-link d-flex align-items-center">
+            <svg class="cicon-dashboard" height="35" width="35" role="img" fill="currentColor"></svg>
             {% endif %}
-            <svg class="cicon-flap" width="20.3" height="13.6" role="img" fill="currentColor"></svg>
-            <span>Flap Monitoring and Analysis</span>
+            <span>Toolbox</span>
           </a>
-      </li>
-      <div id="collapseFlap" class="card mx-auto collapse show" aria-labelledby="listOne"
-        data-parent="#accordionExample">
-        <div class="card-body">
-          <div class="list-group">
-            {% if title == 'Flap Event Analysis - Create Report' %}
-            <button type='button' class="btn btn-primary btn-lg border-0 {{ active }}">Create Report</button>
-            {% else %}
-            <a href="{{ url_for('flapapp') }}" type="button" class="btn btn-primary btn-lg border-0">Create Report</a>
-            {% endif %}
-            <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
-          </div>
-        </div>
-      </div>
-      <li id="listTwo" class="nav-item">
-        <a href="#" class="nav-link" data-toggle="collapse" data-target="#collapseLand" aria-expanded="false"
+      </li> <!-- Converter -->
+      <li id="listOne" class="nav-item">
+        <a href="#" class="nav-link d-flex align-items-center" data-toggle="collapse" data-target="#collapseLand" aria-expanded="false"
           aria-controls="collapseLand">
-          <i class="fas fa-plane-arrival"></i>
-          <span>Hard Landing</span>
+          <svg class="cicon-toolbox" height="35" width="35" role="img" fill="currentColor"></svg>
+          <span>Toolbox</span>
         </a>
       </li>
-      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listTwo" data-parent="#accordionExample">
+      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listOne" data-parent="#accordionExample">
         <div class="card-body">
           <div class="list-group">
             <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
@@ -81,14 +62,14 @@
           </div>
         </div>
       </div>
-      <li id="listThree" class="nav-item">
+      <li id="listTwo" class="nav-item">
         <a href="#" class="nav-link" data-toggle="collapse" data-target="#collapseECS" aria-expanded="false"
           aria-controls="collapseECS">
           <i class="fas fa-thermometer-quarter"></i>
           <span>ECS Monitoring</span>
         </a>
       </li>
-      <div id="collapseECS" class="card mx-auto mb-3 collapse" aria-labelledby="listThree"
+      <div id="collapseECS" class="card mx-auto mb-3 collapse" aria-labelledby="listTwo"
         data-parent="#accordionExample">
         <div class="card-body">
           <div class="list-group">
@@ -97,32 +78,38 @@
           </div>
         </div>
       </div>
-      <hr class="sidebar-divider"> <!-- Sidebar Divider -->
-      <div class="sidebar-heading">AIRCRAFT INTEGRATED REPORT</div> <!-- Sidebar Heading -->
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled link</a>
-      </li>
+      <div data-highlight="highlight">
+        <img class="active-highlighter" style="top: 148px;" src="/static/icons/navlink-active.png" alt="">
+      </div>
     </ul> <!-- Sidebar -->
 
     <div id="contentContainer" class="container-fluid">
-      <nav class="navbar navbar-expand navbar-light mb-4" style="background-color: #03045E;">
+      <nav class="navbar navbar-expand navbar-light mb-4">
         <form id="searchBar" class="form-inline mr-auto">
-          <div class="form-group">
-            <input type="search" class="form-control search-form" placeholder="Search" aria-describedby="helpId">
-            <button type="submit" class="btn btn-primary search-button"><i class="fas fa-search"></i></button>
+          <div class="input-group input-group-lg">
+            <div class="input-group-prepend">
+              <button type="button" class="btn"><i class="fas fa-search"></i></button>
+            </div>
+            <input type="search" class="form-control form-search border-0 shadow-none" placeholder="Search" aria-describedby="Search">
           </div>
         </form>
 
         <div class="nav navbar-nav">
-          <a class="nav-item nav-link active" href="{{ url_for('logout') }}" style="color: rgba(255, 255, 255, .5);">Sign
+          <a class="nav-item text-primary-new font-weight-bold" href="{{ url_for('logout') }}">Sign
             Out
             <span class="sr-only">(current)</span></a>
         </div>
       </nav> <!-- Nav Bar-->
 
       <div class="container-fluid">
-        <div class="row mx-auto mb-4">
-          <h1 class="h3 font-weight-normal">{{ title }}</h1>
+        <div class="row mx-auto mb-4 text-primary-new">
+          <div class="col">
+            <h1 class="text-primary-new">Hello, {{ username }}!</h1>
+          </div>
+          <div class="col d-flex flex-column align-items-end">
+            <p class="mb-0">{{ day }}, {{ date }} {{ month }} {{ year }}</p>
+            <p class="mb-0">{{ time }}</p>
+          </div>
         </div>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -139,8 +126,6 @@
     </div> <!-- Content Container-->
 
   </div> <!-- Main Container-->
-
-  <!-- Optional JavaScript -->
 
   <!-- Bokeh JS -->
   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js" crossorigin="anonymous"></script>
@@ -159,6 +144,10 @@
     crossorigin="anonymous"></script>
   <!-- Font Awesome-->
   <script src="https://kit.fontawesome.com/8416709509.js" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->
+  <script type="text/javascript" src="/static/js/navHighlight.js"></script>
+
+
 </body>
 
 </html>

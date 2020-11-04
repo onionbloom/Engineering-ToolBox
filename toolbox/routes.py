@@ -15,11 +15,20 @@ from toolbox.plots import stabTrimPlot
 from toolbox.models import User
 from toolbox.DFDR_convert_test import DfdrConvert
 
+from datetime import datetime
+
 
 @app.route('/', methods=['GET', 'POST'])
-@login_required
 def dashboard():
-    return render_template('dashboard.html', active='active', title='Dashboard')
+    if current_user.is_authenticated:
+        day = datetime.now().strftime("%A")
+        date = datetime.now().strftime("%d")
+        month = datetime.now().strftime("%B")
+        year = datetime.now().strftime("%Y")
+        time = datetime.now().strftime("%H:%M")
+        return render_template('dashboard.html', active='active', title='Dashboard', username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+
+    return redirect(url_for('login'))
 
 
 @app.route('/Flap-Application', methods=['GET', 'POST'])
@@ -29,7 +38,7 @@ def flapapp():
     form = UploadForm()
     dl = dlCSV()
 
-    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, dl=dl)
+    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, dl=dl, username=current_user.username)
 
 
 @app.route('/raw', methods=['POST'])

@@ -5,11 +5,14 @@
 {% block content %}
 <div id="introHeader" class="row d-flex flex-column">
   <div class="col">
-    <h1 class="display-4 text-center">Welcome to Engineering Toolbox</h1>
+    <p class="lead text-center">Welcome to</p>
+  </div>
+  <div class="col text-center">
+    <img src="static/icons/Logo.png" alt="Logo">
   </div>
   <div class="col">
     <p class="lead text-center">
-      Engineering toolbox is where you find , unravel, and explore possibilities <br> to expand your horrizon
+      Your advanced collaborative engineering solutions!
     </p>
   </div>
 </div> <!-- Intro header -->
@@ -22,7 +25,7 @@
         {{ form.csrf_token }}
         <div class="form-group">
           {% if form.email.errors %}
-          {{ form.email(class="form-control is-invalid") }}
+          {{ form.email(class="form-control shadow-none is-invalid") }}
 
           <div class="invalid-feedback">
             {% for error in form.email.errors %}
@@ -58,19 +61,25 @@
             <span class="label-text">{{ form.password.label.text}}</span>
           </label>
         </div>
-        <div class="form-group">
-          {{ form.remember(class="form-check-input ml-0")}}
-          {{ form.remember.label(class="form-check-label ml-3")}}
-        </div>
-        <div class="form-group text-center">
-          {{ form.submit(class="btn mb-0") }}
-          <small class="form-text text-muted mx-auto">
-            <a href="#">Reset password!</a>
-          </small>
+        <div class="row">
+          <div class="col d-flex align-items-center">
+            <div class="form-group mb-0 h-auto">
+              {{ form.remember(class="form-check-input ml-0")}}
+              {{ form.remember.label(class="form-check-label ml-3")}}
+            </div>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <div class="form-group mb-0 h-auto">
+              {{ form.submit(class="btn mb-0") }}
+            </div>
+          </div>
         </div>
         <div class="border-top pt-2 mt-3">
-          <small class="text-muted">
+          <small class="form-text text-muted mx-auto">
             Need an account? <a href="{{ url_for('register') }}" class="ml-1">Register!</a>
+          </small>
+          <small class="form-text text-muted mx-auto">
+            Or, reset your passwored here: <a href="#">Reset password!</a>
           </small>
         </div>
       </form>

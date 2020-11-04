@@ -1,12 +1,11 @@
 /** Custom CSS on top of Bootstrap 4 **/
 
 #introHeader {
-  padding-top: 151px;
-  padding-bottom: 65px;
+  padding-top: 100px;
 }
 
 #authCard {
-  padding-bottom: 151px;
+  padding-bottom: 100px;
 }
 
 #authCard .card{
@@ -19,7 +18,7 @@
 
 #authCard .card .card-body .card-title {
   text-align: center;
-  color: #707070;
+  color: #21639D;
   font-weight: bold;
   font-size: 30px;
 }
@@ -29,6 +28,7 @@
 }
 
 #authCard .form-group{
+  margin-bottom: 1.5rem;
   height: 50px;
   position: relative;
 }
@@ -40,8 +40,8 @@
   outline: none;
 }
 
-#authCard .form-group input.form-control:focus + label.form-control-label .label-text, 
-#authCard .form-group input.form-control:valid + label.form-control-label .label-text {
+#authCard .form-group input.form-control:focus ~ label.form-control-label .label-text, 
+#authCard .form-group input.form-control:valid ~ label.form-control-label .label-text {
   transform: translateY(-100%);
 }
 
@@ -50,9 +50,9 @@
   bottom: 0px;
   height: 100%;
   width: 100%;
-  color: #707070;
+  color: #adadad;
   pointer-events: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #adadad;
   margin: 0px;
 }
 
@@ -73,11 +73,18 @@
   transition: all 0.3s ease;
 }
 
-#authCard .form-group input.form-control:focus + label.form-control-label::after,
-#authCard .form-group input.form-control:valid + label.form-control-label::after{
+#authCard .form-group input.form-control.is-invalid:focus ~ label.form-control-label::after,
+#authCard .form-group input.form-control.is-invalid:valid ~ label.form-control-label::after{
   left: 0px;
   width: 100%;
-  border-bottom: 3px solid #21709d;
+  border-bottom: 3px solid #EF476F;
+}
+
+#authCard .form-group input.form-control:focus ~ label.form-control-label::after,
+#authCard .form-group input.form-control:valid ~ label.form-control-label::after{
+  left: 0px;
+  width: 100%;
+  border-bottom: 3px solid #118AB2;
 }
 
 #emailSignIn, #passSignIn {
@@ -90,9 +97,10 @@
   width: 93px;
   height: 40px;
   color: aliceblue;
-  background-color: #06D6A0;
-  border-color: #ECF9FD;
-  border-radius: 20px;
+  font-weight: bold;
+  background-color: #38AE78;
+  border-radius: 7px;
+  box-shadow: 0px 3px 3px rgba(58, 58, 58, 0.16);
   margin-bottom: 26px;
 }
 
@@ -113,10 +121,13 @@
   border-radius: 20px;
 }
 
+
+
 .btn-success-new {
   color: aliceblue !important;
-  background-color: #06D6A0;
+  background-color: #38AE78;
   border-color: #ECF9FD;
+  box-shadow: 0px 3px 3px;
   border-radius: 20px;
 }
 
@@ -125,12 +136,19 @@
   padding-right: 0px;
 }
 
+.active-highlighter {
+  position: absolute;
+  overflow: hidden;
+  top: 148px;
+  right: -70px;
+}
+
 .sidebar {
   width: 20rem;
   min-height: 100vh;
-  background-color: #0077B6;
-  background-image: linear-gradient(180deg,#0096C7 10%,#0077B6 100%);
+  background-color: #137C8B;
   color: whitesmoke;
+  position: relative;
 }
 
 .sidebar .sidebar-head {
@@ -139,42 +157,27 @@
 
 }
 
-.sidebar .sidebar-head-title {
-  font-size: 22px;
-  font-weight: 500;
-  margin-left: .45rem;
-  margin-right: .45rem;
-}
-
-.sidebar .sidebar-profile{
-  margin-top: 1.75rem;
+.sidebar .sidebar-logo{
+  margin-top: 2rem;
   margin-bottom: 1.25rem;
 
 }
 
-.sidebar hr.sidebar-divider {
-  border-top: 1px solid lightgray;
-  max-width: 90%;
-  margin: 0 1rem 1rem;
-}
-
-.sidebar .sidebar-heading {
-  padding: 0 1rem;
-  font-weight: 800;
-  font-size: 0.65rem;
-  color: #BCBCBC;
+.sidebar .nav-item .nav-link {
+  padding: 1rem 1rem 1rem 3.5rem !important;
 }
 
 .sidebar .nav-item .nav-link {
   color: white;
   padding: 1rem;
   min-width: 14rem;
-  font-size: .85rem;
+  height: 5rem;
+  font-size: 1.20rem;
 
 }
 
 .sidebar .nav-item .nav-link i, svg {
-  margin-right: .25rem;
+  margin-right: 1.25rem;
 }
 
 .sidebar .nav-item .nav-link.disabled {
@@ -183,6 +186,10 @@
 
 .sidebar .nav-item .nav-link.active {
   font-weight: 500;
+  position: relative;
+  color: #21639D;
+  z-index: 3000;
+
 }
 
 .cicon-flap {
@@ -192,6 +199,34 @@
   background-repeat: no-repeat;
   background-size: 1.2rem 1.2rem;
   background-position-y: -.4rem;
+}
+
+.cicon-dashboard {
+  display: inline-block;
+  color: whitesmoke;
+  background-image: url(/static/icons/dashboard.svg);
+  background-repeat: no-repeat;
+}
+
+.cicon-dashboard.active {
+  display: inline-block;
+  color: whitesmoke;
+  background-image: url(/static/icons/dashboard-active.svg);
+  background-repeat: no-repeat;
+}
+
+.cicon-toolbox {
+  display: inline-block;
+  color: whitesmoke;
+  background-image: url(/static/icons/toolbox.svg);
+  background-repeat: no-repeat;
+}
+
+.cicon-toolbox.active {
+  display: inline-block;
+  color: whitesmoke;
+  background-image: url(/static/icons/toolbox.svg);
+  background-repeat: no-repeat;
 }
 
 .sidebar .card-body{
@@ -215,15 +250,23 @@
   padding-right: 0px !important;
 }
 
-#searchBar .search-form{
-  border-radius: 5px 0px 0px 5px;
+#searchBar .form-control.form-search{
+  border-bottom: 3px solid transparent !important;
+  border-radius: 0 !important;
   width: 20rem;
+  transition: 0.3s all ease;
 }
 
-#searchBar .search-button{
-  background-color: #0096C7;
-  border-color:  #0096C7;
-  border-radius: 0px 5px 5px 0px;
+#searchBar .form-control.form-search:focus{
+  border-bottom: 3px solid #21639D !important;
+}
+
+.navbar {
+  box-shadow: 0px 2px 3px lightgray;
+}
+
+.nav.navbar-nav .nav-item {
+  font-size: 1.0rem;
 }
 
 .border-left-primary {
@@ -231,7 +274,7 @@
 }
 
 .text-primary-new {
-  color: #118AB2;
+  color: #21639D;
 }
 
 .border-left-warning {
@@ -276,6 +319,23 @@
 }
 
 .form-control-file.is-invalid {
-  border: 1px solid #dc3545;
+  border: 1px solid #EF476F;
   border-radius: .25rem;
+}
+
+.card-dashboard {
+  max-width: 260px;
+  height: 340px;
+  border-radius: 30px;
+  background-color: white;
+  box-shadow: 0px 3px 15px lightgray;
+  transition: 0.3s all ease;
+}
+
+.card.card-dashboard:hover{
+  transform: scale(1.05, 1.05);
+}
+
+.card-text {
+  font-size: 14px;
 }
