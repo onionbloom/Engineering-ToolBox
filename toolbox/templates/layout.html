@@ -36,17 +36,6 @@
             <span>Dashboard</span>
           </a>
       </li> <!-- Dashboard -->
-      <li class="nav-item">
-        {% if title == 'Flap Event Analysis - Create Report' %}
-        <a class="nav-link {{ active }} d-flex align-items-center" href="{{ url_for('flapapp') }}">
-          <svg class="cicon-dashboard {{ active }}" height="35" width="35" role="img" fill="currentColor"></svg>
-          {% else %}
-          <a href="{{ url_for('flapapp') }}" class="nav-link d-flex align-items-center">
-            <svg class="cicon-dashboard" height="35" width="35" role="img" fill="currentColor"></svg>
-            {% endif %}
-            <span>Toolbox</span>
-          </a>
-      </li> <!-- Converter -->
       <li id="listOne" class="nav-item">
         <a href="#" class="nav-link d-flex align-items-center" data-toggle="collapse" data-target="#collapseLand" aria-expanded="false"
           aria-controls="collapseLand">
@@ -79,7 +68,7 @@
         </div>
       </div>
       <div data-highlight="highlight">
-        <img class="active-highlighter" style="top: 148px;" src="/static/icons/navlink-active.png" alt="">
+        <img class="active-highlighter d-none" style="top: 148px;" src="/static/icons/navlink-active.png" alt="">
       </div>
     </ul> <!-- Sidebar -->
 

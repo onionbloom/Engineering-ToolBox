@@ -27,8 +27,8 @@ class DfdrConverter:
     output = dfdr_converter(filepath, separator, dataframe_type)
     '''
 
-    def __init__(self, file_path=None, output_path=None, separator=',', dataframe_type=None):
-        if file_path == None:
+    def __init__(self, raw_dfdr_csv, output_path, filename, separator=',', dataframe_type='737-3B'):
+        if raw_dfdr_csv == None:
             raise NameError('Please Specify the File Path')
         if dataframe_type == None:
             raise NameError('Please specify the Dataframe Type')
@@ -37,25 +37,24 @@ class DfdrConverter:
         if len(separator) > 1:
             raise ValueError('Too much value on the separator. Only one separator value can be accepted')
 
-        self.file_path = file_path
+        self.raw_dfdr_csv = raw_dfdr_csv
         self.output_path = output_path
         self.separator = separator
         self.dataframe_type = dataframe_type
 
         # initializing Aircraft Registration and Flight Number
 
-        file_path_splitted = self.file_path.split('/')
-        self.file_name = file_path_splitted[-1]
+        self.file_name = filename
         ac_reg_list = re.findall(r'PK-[A-Z]+', self.file_name)
         self.ac_reg = ac_reg_list[0]
 
         # importing DFDR Data from CSV
         
-        self.dfdr_data = pd.read_csv(self.file_path, low_memory=False, index_col=0, sep=self.separator)
+        self.dfdr_data = pd.read_csv(self.raw_dfdr_csv, low_memory=False, index_col=0, sep=self.separator)
 
         # importing the Dataframe Cross Reference Database
         
-        dataframedb_path = 'dataframe_db/param_crossref_{}.csv'.format(str.upper(self.dataframe_type))
+        dataframedb_path = './toolbox/data/dataframe_db/param_crossref_{}.csv'.format(str.upper(self.dataframe_type))
         self.df_dataframedb = pd.read_csv(dataframedb_path)
 
     def dfdr_tidy(self):
@@ -70,6 +69,7 @@ class DfdrConverter:
         df_dataframedb = self.df_dataframedb
         dict_dataframedb = dict(zip(df_dataframedb['id_dfdr'], df_dataframedb['id_dataframe']))
         dfdr_data = dfdr_data.rename(columns=dict_dataframedb)
+        print(dfdr_data)
 
         # filling empty value on each column
         

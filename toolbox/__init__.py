@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 
 UPLOAD_FOLDER = './toolbox/uploads'
+DATAFRAME_DB = './toolbox/data/dataframe_db'
 
 # Specify the application's root so Python may know where to look for templates, and static files.
 app = Flask(__name__)
@@ -13,8 +14,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'R3YU9hssXvaBWT9R'
 # Specifying the upload folder for uploaded files
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-# Max file size is 16 MB
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+# specifying the dataframe_db folder for dataframe type x-referencing
+app.config['DATAFRAME_DB'] = DATAFRAME_DB
+# Max file size is 25 MB
+app.config['MAX_CONTENT_LENGTH'] = 25 * 1024 * 1024
 # Create an SQLalchemy database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 # Initializing CSRF protection, password hashing with bcrypt, and database with SQLalchemy globally for the app

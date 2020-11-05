@@ -13,7 +13,7 @@ from toolbox import app, bcrypt, db
 from toolbox.forms import dlCSV, LoginForm, RegistrationForm, UploadForm
 from toolbox.plots import stabTrimPlot
 from toolbox.models import User
-from toolbox.DFDR_convert_test import DfdrConvert
+from toolbox.dfdr_converter import DfdrConverter
 
 from datetime import datetime
 
@@ -61,9 +61,8 @@ def raw():
         # Save the selected file into the upload folder
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))"""
 
-        dfdr_df = DfdrConvert(file, filename)
+        dfdr_df = DfdrConverter(file,app.config['UPLOAD_FOLDER'],filename,';')
         dfdr_df.dfdr_tidy()
-        dl_path = dfdr_df.clean_csv_path
         # Save the selected file into the upload folder
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         if file.filename == '':
