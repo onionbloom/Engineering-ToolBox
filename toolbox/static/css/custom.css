@@ -149,6 +149,7 @@
   background-color: #137C8B;
   color: whitesmoke;
   position: relative;
+  transition: 0.3s width ease;
 }
 
 .sidebar .sidebar-head {
@@ -164,12 +165,8 @@
 }
 
 .sidebar .nav-item .nav-link {
-  padding: 1rem 1rem 1rem 3.5rem !important;
-}
-
-.sidebar .nav-item .nav-link {
   color: white;
-  padding: 1rem;
+  padding: 1rem 1rem 1rem 3.5rem;
   min-width: 14rem;
   height: 5rem;
   font-size: 1.20rem;
@@ -339,3 +336,35 @@
 .card-text {
   font-size: 14px;
 }
+
+@media (max-width: 992px) {
+
+  .sidebar {
+    width: 7rem;
+  }
+
+  .sidebar .sidebar-logo{
+    width: 100%;
+  }
+
+  li.nav-item {
+    width: 100%;
+  }
+
+  .sidebar .nav-item .nav-link {
+    min-width: 100%;
+    padding: 0;
+    justify-content: center !important;
+    display: flex;
+    flex-direction: column
+  }
+
+  .sidebar .nav-item .nav-link i, svg {
+    margin: 0;
+  }  
+
+  .sidebar .nav-item .nav-link span {
+    font-size: 13px;
+  }
+
+} 
