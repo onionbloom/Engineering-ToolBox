@@ -36,5 +36,6 @@ class Clean_dfdr(db.Model):
   datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
   def __repr__(self):
-    return f"Clean_dfdr('{self.ac_reg}','{self.flight_no}','{self.date}')"
+    return f"Clean_dfdr('{self.ac_reg}','{self.flight_no}','{self.datetime}')"
+    
 

@@ -24,13 +24,12 @@
           <div class="input-group-append">
             {{ form.submit(class="btn btn-success-new") }}
           </div>  
-        </div>
+        </div> <!-- File selection input -->
       </div>
     </form> <!-- Upload Raw .csv Form -->
   </div>
   <div class="col-lg-12 col-xl-5 mb-4 border-left-light">
     <div class="card text-white bg-light">
-      <img class="card-img-top" src="holder.js/100px180/" alt="">
       <div class="card-body">
         <form action="{{ url_for('launchEDA') }}" method="post">
           {{ form_EDA.csrf_token }}
@@ -41,7 +40,7 @@
             {{ form_EDA.submit(class="btn btn-primary-new", disabled="") }}
             {% endif %}
           </div>
-        </form>
+        </form> <!-- EDA Options Form -->
       </div>
     </div>
   </div>

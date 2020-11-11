@@ -37,8 +37,13 @@ def flapapp():
     # not passing in the data explicitly as Flask-WTF handles passing form data for us
     form = UploadForm()
     form_EDA = EDAForm()
+    day = datetime.now().strftime("%A")
+    date = datetime.now().strftime("%d")
+    month = datetime.now().strftime("%B")
+    year = datetime.now().strftime("%Y")
+    time = datetime.now().strftime("%H:%M")
 
-    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, form_EDA=form_EDA, username=current_user.username)
+    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
 
 
 @app.route('/raw', methods=['POST'])
@@ -47,24 +52,30 @@ def raw():
     form_EDA = EDAForm()
 
     if form.validate_on_submit() and 'file' in request.files:
+        day = datetime.now().strftime("%A")
+        date = datetime.now().strftime("%d")
+        month = datetime.now().strftime("%B")
+        year = datetime.now().strftime("%Y")
+        time = datetime.now().strftime("%H:%M")
         file = request.files.get('file')
         # secure_filename secures any filename before storing into the system
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        dfdr_df = DfdrConverter(
-            file, app.config['UPLOAD_FOLDER'], filename, ';')
+        dfdr_df = DfdrConverter(file, app.config['UPLOAD_FOLDER'], filename, ';')
         dfdr_df.dfdr_tidy()
         clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
+        db.session.add(clean_dfdr)
+        db.session.commit()
         if file.filename == '':
             flash('No selected file', 'warning')
             return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                   form=form, form_EDA=form_EDA)
+                                   form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
 
         flash(
             f'The file {file.filename} was successfully uploaded!', 'success')
         return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                               form=form, form_EDA=form_EDA, filename=filename)
+                               form=form, form_EDA=form_EDA, filename=filename, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
 
     return redirect(url_for('flapapp'))
 

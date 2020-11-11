@@ -29,13 +29,14 @@
 
           <div class="invalid-feedback">
             {% for error in form.email.errors %}
-            <span> {{ error }} </span>
+            {{ error }}
             {% endfor %}
           </div>
 
           {% else %}
 
           {{ form.email(class="form-control shadow-none") }}
+          <small class="form-text text-muted">Use your corporate email.</small>
           <!-- email field validation -->
           {% endif %}
           <label for="email" class="form-control-label">

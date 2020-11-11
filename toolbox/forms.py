@@ -46,14 +46,17 @@ class LoginForm(FlaskForm):
 
 class UploadForm(FlaskForm):
     """ Flask Form to handle .csv uploads """
-    file = FileField('Upload Raw FDR', validators=[FileRequired(),
+    file = FileField('Select File', validators=[FileRequired(),
                                                    FileAllowed(ALLOWED_EXTENSIONS, 'Only the following extensions are allowed: .xls, .xlsx, .csv, .txt')])
-    submit = SubmitField('Select File')
+    submit = SubmitField('Upload File')
 
 
 class EDAForm(FlaskForm):
     """ Flask Form to handle selecting the available clean dfdr .csv to perform the chosen analysis """
     dfdr = SelectField('Choose Dataframe')
+    registration = SelectField('Choose Registration')
+    flight_no = SelectField('Choose Flight Number')
+    date = SelectField('Choose Date')
     # No choices arguements are defined in this declaration as we will define them dynamically in the view functions in routes.py 
     submit = SubmitField('Launch EDA', _name='launchEDA')
 
