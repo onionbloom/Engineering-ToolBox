@@ -4,7 +4,8 @@ from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
-  """ This callback function is used to reload the user object from the user ID stored in the session. It takes the unicode ID of a user, and return the corresponding user object."""
+  """ This callback function is used to reload the user object from the user ID stored in the session. It takes the unicode ID of a user, 
+  and return the corresponding user object from the User db model."""
   return User.query.get(int(user_id))
 
 class User(db.Model, UserMixin):
@@ -27,3 +28,13 @@ class Post(db.Model):
 
   def __repr__(self):
     return f"Post('{self.title}','{self.data_posted}')"
+
+class Clean_dfdr(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  ac_reg = db.Column(db.String(10), nullable=False)
+  flight_no = db.Column(db.String(10), nullable=False)
+  datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+  def __repr__(self):
+    return f"Clean_dfdr('{self.ac_reg}','{self.flight_no}','{self.date}')"
+

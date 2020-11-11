@@ -109,7 +109,7 @@
   height: 40px;
   color: aliceblue;
   background-color: #118AB2;
-  border-color: #ECF9FD;
+  border: 1px solid transparent;
   border-radius: 20px;
   margin-bottom: 26px;
 }
@@ -117,7 +117,7 @@
 .btn-primary-new {
   color: aliceblue !important;
   background-color: #118AB2;
-  border-color: #ECF9FD;
+  border: 1px solid transparent;
   border-radius: 20px;
 }
 
@@ -126,9 +126,14 @@
 .btn-success-new {
   color: aliceblue !important;
   background-color: #38AE78;
-  border-color: #ECF9FD;
+  border: 1px solid transparent;
   box-shadow: 0px 3px 3px;
   border-radius: 20px;
+  transition: 0.3s all ease;
+}
+
+.btn-success-new:hover {
+  background-color: #2f9065;
 }
 
 #mainContainer {

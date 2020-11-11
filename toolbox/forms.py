@@ -1,7 +1,10 @@
-from wtforms import BooleanField, StringField, PasswordField, SubmitField
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from flask_wtf.file import FileAllowed, FileField, FileRequired
+from wtforms import (BooleanField, PasswordField, SelectField, StringField,
+                     SubmitField)
+from wtforms.validators import (DataRequired, Email, EqualTo, Length,
+                                ValidationError)
+
 from toolbox.models import User
 
 ALLOWED_EXTENSIONS = ['xls', 'xlsx', 'csv', 'txt']
@@ -34,7 +37,8 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     """ Flask Form to handle user login """
-    email = StringField('User Email', validators=[DataRequired(), Email()],render_kw={"autocomplete":"off"})
+    email = StringField('User Email', validators=[
+                        DataRequired(), Email()], render_kw={"autocomplete": "off"})
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Continue', id='buttonSignIn')
@@ -47,6 +51,9 @@ class UploadForm(FlaskForm):
     submit = SubmitField('Select File')
 
 
-class dlCSV(FlaskForm):
-    """ Flask Form to launch the exploratory data analysis, download the clean .csv, and other features """
-    submit = SubmitField('Launch EDA', id='dlCSV', _name='dlCSV')
+class EDAForm(FlaskForm):
+    """ Flask Form to handle selecting the available clean dfdr .csv to perform the chosen analysis """
+    dfdr = SelectField('Choose Dataframe')
+    # No choices arguements are defined in this declaration as we will define them dynamically in the view functions in routes.py 
+    submit = SubmitField('Launch EDA', _name='launchEDA')
+

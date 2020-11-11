@@ -10,9 +10,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
 from toolbox import app, bcrypt, db
-from toolbox.forms import dlCSV, LoginForm, RegistrationForm, UploadForm
+from toolbox.forms import LoginForm, RegistrationForm, UploadForm, EDAForm
 from toolbox.plots import stabTrimPlot
-from toolbox.models import User
+from toolbox.models import User, Clean_dfdr
 from toolbox.dfdr_converter import DfdrConverter
 
 from datetime import datetime
@@ -34,52 +34,44 @@ def dashboard():
 @app.route('/Flap-Application', methods=['GET', 'POST'])
 @login_required
 def flapapp():
-    # not passing in the data explicitly as Flask-WTF handles passing form data of us
+    # not passing in the data explicitly as Flask-WTF handles passing form data for us
     form = UploadForm()
-    dl = dlCSV()
+    form_EDA = EDAForm()
 
-    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, dl=dl, username=current_user.username)
+    return render_template('flapapp.html', active='active', title='Flap Event Analysis - Create Report', form=form, form_EDA=form_EDA, username=current_user.username)
 
 
 @app.route('/raw', methods=['POST'])
 def raw():
     form = UploadForm()
-    dl = dlCSV()
-    dl_path = ''
+    form_EDA = EDAForm()
 
     if form.validate_on_submit() and 'file' in request.files:
         file = request.files.get('file')
-        filename = secure_filename(file.filename)
-        # Convert the FileStorage object from the request into a pandas dataframe
-        """dataset = pd.read_csv(file)
-        dataset['DATETIME'] = pd.to_datetime(
-            dataset['DATETIME'], format="%f", infer_datetime_format=True)
-        plot = stabTrimPlot(dataset)
-        script, div = components(plot)
         # secure_filename secures any filename before storing into the system
         filename = secure_filename(file.filename)
-        # Save the selected file into the upload folder
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))"""
-
-        dfdr_df = DfdrConverter(file,app.config['UPLOAD_FOLDER'],filename,';')
+        # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
+        # get a clean and pandas friendly .csv, then upload it.
+        dfdr_df = DfdrConverter(
+            file, app.config['UPLOAD_FOLDER'], filename, ';')
         dfdr_df.dfdr_tidy()
-        # Save the selected file into the upload folder
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
         if file.filename == '':
             flash('No selected file', 'warning')
             return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                   form=form, dl=dl)
+                                   form=form, form_EDA=form_EDA)
 
         flash(
             f'The file {file.filename} was successfully uploaded!', 'success')
         return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                               form=form, dl=dl, filename=filename)
+                               form=form, form_EDA=form_EDA, filename=filename)
 
-    return dl_path
+    return redirect(url_for('flapapp'))
 
 
 @app.route('/download', methods=['POST'])
-def dlclean():
+def launchEDA():
+    form_EDA = EDAForm()
 
     return redirect(url_for('flapapp'))
 

@@ -156,6 +156,10 @@ class DfdrConverter:
                     raise
 
         dfdr_data.to_csv(output_path_complete)
+
+        self.datetime = dfdr_data.loc[1, 'DATETIME']
+        self.flight_no =  flight_no[0]
+
         return dfdr_data
 
 
