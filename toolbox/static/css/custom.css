@@ -178,8 +178,8 @@
 
 }
 
-.sidebar .nav-item .nav-link i, svg {
-  margin-right: 1.25rem;
+.sidebar .nav-item .nav-link i, .sidebar .nav-item .nav-link svg {
+  margin: 0rem 1.25rem 0rem 0rem;
 }
 
 .sidebar .nav-item .nav-link.disabled {
@@ -245,6 +245,34 @@
 
 .btn-group-lg>.btn, .btn-lg:hover, .btn-lg.active{
   background-color: #0077B6;
+}
+
+.sidebar.sidebar-collapsed {
+  width: 7rem;
+}
+
+.sidebar.sidebar-collapsed .sidebar-logo{
+  width: 100%;
+}
+
+li.nav-item {
+  width: 100%;
+}
+
+.sidebar.sidebar-collapsed .nav-item .nav-link {
+  min-width: 100%;
+  padding: 0;
+  justify-content: center !important;
+  display: flex;
+  flex-direction: column
+}
+
+.sidebar.sidebar-collapsed .nav-item .nav-link i,.sidebar.sidebar-collapsed .nav-item .nav-link svg {
+  margin: 0;
+}  
+
+.sidebar.sidebar-collapsed .nav-item .nav-link span {
+  font-size: 13px;
 }
 
 #contentContainer {

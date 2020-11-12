@@ -21,7 +21,7 @@
 <body>
 
   <div id="mainContainer" class="accordion container-fluid d-flex flex-row">
-    <ul id="accordionExample" class="nav flex-column sidebar" data-highlight-container="highlight-container">
+    <ul id="sidebar" class="nav flex-column sidebar" data-highlight-container="highlight-container">
       <a class="sidebar-logo d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
         <img src="static/icons/Logo_sidebar.png" alt="Logo">
       </a>
@@ -38,13 +38,13 @@
           </a>
       </li> <!-- Dashboard -->
       <li id="listOne" class="nav-item">
-        <a href="#" class="nav-link d-lg-flex align-items-center" data-toggle="collapse" data-target="#collapseLand" aria-expanded="false"
-          aria-controls="collapseLand">
+        <a href="#" class="nav-link d-lg-flex align-items-center" data-toggle="collapse" data-target="#collapseLand"
+          aria-expanded="false" aria-controls="collapseLand">
           <svg class="cicon-toolbox" height="35" width="35" role="img" fill="currentColor"></svg>
           <span>Toolbox</span>
         </a>
       </li>
-      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listOne" data-parent="#accordionExample">
+      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listOne" data-parent="#sidebar">
         <div class="card-body">
           <div class="list-group">
             <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
@@ -59,12 +59,15 @@
 
     <div id="contentContainer" class="container-fluid">
       <nav class="navbar navbar-expand navbar-light mb-4">
+        <button id="collapse-btn" type="button" class="btn border-0 shadow-none pl-0" data-toggle="button"
+          aria-pressed="false" autocomplete="off"><i class="fas fa-caret-left"></i></button>
         <form id="searchBar" class="form-inline mr-auto">
           <div class="input-group input-group-lg">
             <div class="input-group-prepend">
               <button type="button" class="btn"><i class="fas fa-search"></i></button>
             </div>
-            <input type="search" class="form-control form-search border-0 shadow-none" placeholder="Search" aria-describedby="Search">
+            <input type="search" class="form-control form-search border-0 shadow-none" placeholder="Search"
+              aria-describedby="Search">
           </div>
         </form>
 
@@ -120,6 +123,7 @@
   <script src="https://kit.fontawesome.com/8416709509.js" crossorigin="anonymous"></script>
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="/static/js/navHighlight.js"></script>
+  <script type="text/javascript" src="/static/js/collapse-sidebar.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 
 

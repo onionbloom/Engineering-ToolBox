@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
   navlink = $("a.nav-link");
 
@@ -7,7 +7,6 @@ $(document).ready(function() {
     /**var activeNavItem = $("li.nav-item.active")
         highlight = $("img.active-highlighter");
         highlight.addClass("yay");*/
-    alert("YATZE!");
   }
 
   navlink.on("click", moveHighlight);
