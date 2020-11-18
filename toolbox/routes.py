@@ -11,9 +11,10 @@ from werkzeug.utils import secure_filename
 
 from toolbox import app, bcrypt, db
 from toolbox.forms import LoginForm, RegistrationForm, UploadForm, EDAForm
-from toolbox.plots import stabTrimPlot
+from toolbox.plots import stabTrimPlot, flapAsymPlot
 from toolbox.models import User, Clean_dfdr
 from toolbox.dfdr_converter import DfdrConverter
+from toolbox.flap_monitoring import FlapDataExtractor
 
 from datetime import datetime
 
@@ -50,7 +51,6 @@ def flapapp():
 def raw():
     form = UploadForm()
     form_EDA = EDAForm()
-
     if form.validate_on_submit() and 'file' in request.files:
         day = datetime.now().strftime("%A")
         date = datetime.now().strftime("%d")
@@ -62,9 +62,11 @@ def raw():
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        dfdr_df = DfdrConverter(file, app.config['UPLOAD_FOLDER'], filename, ';')
+        dfdr_df = DfdrConverter(
+            file, app.config['UPLOAD_FOLDER'], filename, ';')
         dfdr_df.dfdr_tidy()
-        clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
+        clean_dfdr = Clean_dfdr(
+            ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
         db.session.add(clean_dfdr)
         db.session.commit()
         if file.filename == '':
@@ -82,7 +84,37 @@ def raw():
 
 @app.route('/download', methods=['POST'])
 def launchEDA():
+    form = UploadForm()
     form_EDA = EDAForm()
+    if form.validate_on_submit() and 'file' in request.files:
+        day = datetime.now().strftime("%A")
+        date = datetime.now().strftime("%d")
+        month = datetime.now().strftime("%B")
+        year = datetime.now().strftime("%Y")
+        time = datetime.now().strftime("%H:%M")
+        file = request.files.get('file')
+        # secure_filename secures any filename before storing into the system
+        filename = secure_filename(file.filename)
+        # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
+        # get a clean and pandas friendly .csv, then upload it.
+        df = pd.read_csv(file)
+        df['DATETIME'] = pd.to_datetime(df['DATETIME'])
+        plot, plot2 = flapAsymPlot(df)
+        plotTitle = plot.title.text
+        plotTitle2 = plot2.title.text
+        script, div = components(plot)
+        script2, div2 = components(plot2)
+
+        if file.filename == '':
+            flash('No selected file', 'warning')
+            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                                   form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+
+        flash(
+            f'The file {file.filename} was successfully uploaded!', 'success')
+        return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                               div=div, script=script, plotTitle=plotTitle, div2=div2, script2=script2, plotTitle2=plotTitle2,
+                               form=form, form_EDA=form_EDA, filename=filename, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
 
     return redirect(url_for('flapapp'))
 

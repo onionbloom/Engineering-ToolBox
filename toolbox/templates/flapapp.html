@@ -31,15 +31,33 @@
   <div class="col-lg-12 col-xl-5 mb-4 border-left-light">
     <div class="card text-white bg-light">
       <div class="card-body">
-        <form action="{{ url_for('launchEDA') }}" method="post">
+        <form action="{{ url_for('launchEDA') }}" method="post" enctype="multipart/form-data">
           {{ form_EDA.csrf_token }}
           <div class="form-group">
-            {% if edaLaunchable %}
-            {{ form_EDA.submit(class="btn btn-primary-new") }}
-            {% else %}
-            {{ form_EDA.submit(class="btn btn-primary-new", disabled="") }}
-            {% endif %}
-          </div>
+            <div class="input-group">
+              <div class="custom-file">
+                {% if form_EDA.file.errors %}
+                {{ form_EDA.file(class='custom-file-input is-invalid', accept='.xls,.xlsx,.txt,.csv') }}
+                <div class="invalid-feedback">
+                  {% for error in form_EDA.file.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div><!-- Invalid file upload error message -->
+                {% else %}
+                {{ form_EDA.file(class='custom-file-input', accept='.xls,.xlsx,.txt,.csv') }}
+                {% endif %}
+                {{ form_EDA.file.label(class='custom-file-label') }}
+              </div>
+              <div class="input-group-append">
+                {{ form_EDA.submit(class="btn btn-primary-new") }}
+                <!--{% if edaLaunchable %}
+                {{ form_EDA.submit(class="btn btn-primary-new") }}
+                {% else %}
+                {{ form_EDA.submit(class="btn btn-primary-new", disabled="") }}
+                {% endif %} -->
+              </div>  
+            </div> 
+          </div> <!-- File selection input -->
         </form> <!-- EDA Options Form -->
       </div>
     </div>
@@ -64,8 +82,16 @@
       <footer class="blockquote-footer"> <cite title="Figure Text">Figure Text</cite></footer>
     </blockquote>
   </div>
+  <div class="col-12 mb-4">
+    <div class="card">
+      <div class="card-header">
+        <h6 class="font-weight-bold text-primary-new m-0">{{ plotTitle2 }}</h6>
+      </div>
+      <div class="card-body">
+        {{ div2 | safe }}
+      </div>
+    </div>
+  </div>
 </div>
 
-
-{{ script | safe }}
 {% endblock %}

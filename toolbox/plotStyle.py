@@ -14,7 +14,7 @@ axis_label_font_style = 'normal'
 axis_label_size = '12pt'
 axis_ticks_size = '12pt'
 default_padding = 10
-chart_inner_left_padding = 0.15
+chart_inner_left_padding = 0
 
 
 def palette_generator(length):
@@ -38,7 +38,7 @@ def plot_styler(plot):
     plot.yaxis.axis_label_standoff = default_padding
     plot.yaxis.major_label_text_font = chart_font
     plot.yaxis.major_label_text_font_size = axis_label_size
-    # "stretch_both" allows the plot elements to be completely responsive
+    # "stretch_width" allows the plot elements to be responsive in width
     plot.sizing_mode = "stretch_width"
     plot.height = 380
     # Hiding the logo and figure title so that the title may be generated and styled at front-end

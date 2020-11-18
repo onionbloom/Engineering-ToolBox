@@ -69,7 +69,6 @@ class DfdrConverter:
         df_dataframedb = self.df_dataframedb
         dict_dataframedb = dict(zip(df_dataframedb['id_dfdr'], df_dataframedb['id_dataframe']))
         dfdr_data = dfdr_data.rename(columns=dict_dataframedb)
-        print(dfdr_data)
 
         # filling empty value on each column
         
