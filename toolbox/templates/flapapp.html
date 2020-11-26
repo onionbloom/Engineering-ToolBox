@@ -29,35 +29,24 @@
     </form> <!-- Upload Raw .csv Form -->
   </div>
   <div class="col-lg-12 col-xl-5 mb-4 border-left-light">
-    <div class="card text-white bg-light">
+    <div class="card bg-light">
       <div class="card-body">
-        <form action="{{ url_for('launchEDA') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url_for('launchEDA') }}" method="post">
           {{ form_EDA.csrf_token }}
           <div class="form-group">
-            <div class="input-group">
-              <div class="custom-file">
-                {% if form_EDA.file.errors %}
-                {{ form_EDA.file(class='custom-file-input is-invalid', accept='.xls,.xlsx,.txt,.csv') }}
-                <div class="invalid-feedback">
-                  {% for error in form_EDA.file.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div><!-- Invalid file upload error message -->
-                {% else %}
-                {{ form_EDA.file(class='custom-file-input', accept='.xls,.xlsx,.txt,.csv') }}
-                {% endif %}
-                {{ form_EDA.file.label(class='custom-file-label') }}
-              </div>
-              <div class="input-group-append">
-                {{ form_EDA.submit(class="btn btn-primary-new") }}
-                <!--{% if edaLaunchable %}
-                {{ form_EDA.submit(class="btn btn-primary-new") }}
-                {% else %}
-                {{ form_EDA.submit(class="btn btn-primary-new", disabled="") }}
-                {% endif %} -->
-              </div>  
-            </div> 
+            {{ form_EDA.registration.label }}
+            {{ form_EDA.registration(class='form-control') }}
           </div> <!-- File selection input -->
+          <div class="form-row">
+            <div class="form-group col-lg-6">
+              {{ form_EDA.flight_no.label }}
+              {{ form_EDA.flight_no(class="form-control") }}
+            </div>
+            <div class="form-group col-lg-6">
+              {{ form_EDA.date.label }}
+              {{ form_EDA.date(class="form-control") }}
+            </div>
+          </div>
         </form> <!-- EDA Options Form -->
       </div>
     </div>
