@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "C:\\ProgramData\\Anaconda3\\envs\\FlapApp\\python.exe",
+  "python.pythonPath": "C:\\Users\\581952\\.conda\\envs\\EngToolBox\\python.exe",
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
   "python.linting.pylintArgs": [

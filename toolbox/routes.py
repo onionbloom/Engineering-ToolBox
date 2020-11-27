@@ -68,8 +68,10 @@ def raw():
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        dfdr_df = DfdrConverter(file, app.config['UPLOAD_FOLDER'], filename,)
-        dfdr_df.dfdr_tidy()
+        dfdr_df = DfdrConverter(file=file, output_path=app.config['UPLOAD_FOLDER'], filename=filename)
+        ac_reg = dfdr_df.obtain_ac_reg()
+        df_type = dfdr_df.dataframe_selection(ac_reg)
+        dfdr_df.dfdr_tidy(dataframe_type=df_type)
         clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
         db.session.add(clean_dfdr)
         db.session.commit()
