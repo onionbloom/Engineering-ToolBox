@@ -13,7 +13,7 @@ from toolbox import app, bcrypt, db
 from toolbox.forms import LoginForm, RegistrationForm, UploadForm, EDAForm
 from toolbox.plots import stabTrimPlot, flapAsymPlot
 from toolbox.models import User, Clean_dfdr
-from toolbox.dfdr_converter import DfdrConverter
+from toolbox.dfdr_parser import DfdrConverter
 from toolbox.flap_monitoring import FlapDataExtractor
 
 from datetime import datetime
@@ -68,13 +68,14 @@ def raw():
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        dfdr_df = DfdrConverter(file=file, output_path=app.config['UPLOAD_FOLDER'], filename=filename)
+        dfdr_df = DfdrConverter(file=file, output_path=app.config['UPLOAD_FOLDER'], filename=filename, separator=';')
         ac_reg = dfdr_df.obtain_ac_reg()
         df_type = dfdr_df.dataframe_selection(ac_reg)
         dfdr_df.dfdr_tidy(dataframe_type=df_type)
-        clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.datetime)
+        clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.date)
         db.session.add(clean_dfdr)
         db.session.commit()
+        Clean_dfdr.query.all()
         if file.filename == '':
             flash('No selected file', 'warning')
             return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',

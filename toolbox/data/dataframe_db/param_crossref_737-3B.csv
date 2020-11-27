@@ -64,6 +64,7 @@ AilRollCmd-L,AILROLLCMD_L,Ail Roll Cmd-L,numeric,,
 AilRollCmd-R,AILROLLCMD_R,Ail Roll Cmd-R,numeric,,
 Air/GndOnGnd,AIR_GNDONGND,Air/Gnd On Ground,numeric,,
 Air/Ground,AIR_GROUND,Air/Ground,object,V,V
+AIR/GROUND,AIR_GROUND,NA,NA,,
 AirportsS-CP,AIRPORTSS_CP,AirportsSelctd-CP,object,,
 AirportsS-FO,AIRPORTSS_FO,Airports Selctd-FO,object,,
 Airspeed-Cmp,AIRSPEED_CMP,Computed Airspeed,numeric,V,V
@@ -348,15 +349,15 @@ FCC-MachTr-L,FCC_MACHTR_L,FCC in Cmd of Mach,object,,
 FCC-MachTr-R,FCC_MACHTR_R,FCC in Cmd of Mach,object,,
 FlamOutAct-1,FLAMOUTACT_1,Flameout ProtAct-1,object,,
 FlamOutAct-2,FLAMOUTACT_2,Flameout ProtAct-2,object,,
-FlapExt-1,FLAPEXT_1,Flap Extend-1,object,,
-FlapExt-2,FLAPEXT_2,Flap Extend-2,object,,
-FlapExt-3,FLAPEXT_3,Flap Extend-3,object,,
-FlapExt-4,FLAPEXT_4,Flap Extend-4,object,,
-FlapHandlPos,FLAPHANDLPOS,Flap Handle Pos,numeric,,
-FlapTrans-1,FLAPTRANS_1,Flap Transit-1,object,,
-FlapTrans-2,FLAPTRANS_2,Flap Transit-2,object,,
-FlapTrans-3,FLAPTRANS_3,Flap Transit-3,object,,
-FlapTrans-4,FLAPTRANS_4,Flap Transit-4,object,,
+FlapExt-1,FLAPEXT_1,Flap Extend-1,object,V,V
+FlapExt-2,FLAPEXT_2,Flap Extend-2,object,V,V
+FlapExt-3,FLAPEXT_3,Flap Extend-3,object,V,V
+FlapExt-4,FLAPEXT_4,Flap Extend-4,object,V,V
+FlapHandlPos,FLAPHANDLPOS,Flap Handle Pos,numeric,V,V
+FlapTrans-1,FLAPTRANS_1,Flap Transit-1,object,V,V
+FlapTrans-2,FLAPTRANS_2,Flap Transit-2,object,V,V
+FlapTrans-3,FLAPTRANS_3,Flap Transit-3,object,V,V
+FlapTrans-4,FLAPTRANS_4,Flap Transit-4,object,V,V
 FlareArm,FLAREARM,Flare Arm,object,,
 FlareCmdNotI,FLARECMDNOTI,Flare Cmd Not Init,object,,
 FlareEngage,FLAREENGAGE,Flare Engage,object,,
@@ -827,9 +828,9 @@ TCAS-SysStat,TCAS_SYSSTAT,TCAS System Status,object,,
 TE-BypassVlv,TE_BYPASSVLV,TE Bypass Valv Pos,object,,
 TE-FlapLoadR,TE_FLAPLOADR,TE FlapLoad Relief,object,,
 TE-FlapPsE-L,TE_FLAPPSE_L,TE FlapPos-L Rev E,numeric,V,
-TE-FlapPsE-L Syncrho,TE_FLAPPSE_L_SYNCRHO,TE FlapPos-L Rev E (Syncrho),numeric,,
+TE-FlapPsE-L Syncrho,TE_FLAPPSE_L_SYNCRHO,TE FlapPos-L Rev E (Syncrho),numeric,V,
 TE-FlapPsE-R,TE_FLAPPSE_R,TE FlapPos-R Rev E,numeric,V,
-TE-FlapPsE-R Synchro,TE_FLAPPSE_R_SYNCHRO,TE FlapPos-R Rev E (Syncrho),numeric,,
+TE-FlapPsE-R Synchro,TE_FLAPPSE_R_SYNCHRO,TE FlapPos-R Rev E (Syncrho),numeric,V,
 TE-FlapPsF-L,TE_FLAPPSF_L,TE FlapPos-L Rev F,numeric,,
 TE-FlapPsF-R,TE_FLAPPSF_R,TE FlapPos-R Rev F,numeric,,
 TE-FlapSkw-1,TE_FLAPSKW_1,TE Flap Skew Pos-1,numeric,V,

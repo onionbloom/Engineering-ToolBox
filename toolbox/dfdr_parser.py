@@ -164,6 +164,7 @@ class DfdrConverter:
             filter(regex_fltno.match, FLTNUMBCHAR_extracted_list))
         flight_no = re.findall(regex_fltno, FLTNUMBCHAR_matched[0])
         dfdr_data['FLIGHT_NO'] = flight_no[0]
+        self.flight_no = flight_no[0]
 
         # converting the column type of dfdr_data dataframe from object to numeric
 
@@ -189,6 +190,7 @@ class DfdrConverter:
         output_path_added = output_path + '/' + \
             output_folder_name + '/' + 'DFDR_Converter' + '/'
 
+        self.date = date_early.strftime("%Y-%m-%d")
         file_name = 'dfdr_data_tidy.csv'
         output_path_complete = output_path_added + file_name
 
