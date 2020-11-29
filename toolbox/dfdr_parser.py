@@ -3,7 +3,7 @@ import re
 import numpy as np
 import os
 import errno
-from datetime import date
+from datetime import date, datetime
 from datetime import timedelta
 
 
@@ -190,7 +190,7 @@ class DfdrConverter:
         output_path_added = output_path + '/' + \
             output_folder_name + '/' + 'DFDR_Converter' + '/'
 
-        self.date = date_early.strftime("%Y-%m-%d")
+        self.date = date_early.to_pydatetime().date()
         file_name = 'dfdr_data_tidy.csv'
         output_path_complete = output_path_added + file_name
 

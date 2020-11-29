@@ -1,4 +1,4 @@
-# This module contains functions that will plot the given data
+import pandas as pd
 from bokeh.models import ColumnDataSource, HoverTool, PrintfTickFormatter, CategoricalColorMapper, BoxAnnotation
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
@@ -29,13 +29,15 @@ def stabTrimPlot(dataframe):
     return plot
 
 
-def flapAsymPlot(dataframe):
+def flapAsymPlot(registration, flight_no, date, output_folder):
     """ Function to plot Flap Asymmetry parameters """
     hover = HoverTool(tooltips=[('Altitude', '@ALTITUDE ft'),
                                 ('Time', '@DATETIME{%H:%M:%S}')],
                       formatters={'@DATETIME': 'datetime'},
                       mode='vline')
 
+    clean_dfdr_path = output_folder + registration + '_' + flight_no + '_' + date
+    dataframe = pd.read_csv(clean_dfdr_path)
     source = ColumnDataSource(dataframe)
     dataframe['TE_FLPSK1TO8_VAL'] = (
         dataframe['TE_FLAPSKW_1'] - dataframe['TE_FLAPSKW_8']).abs()

@@ -33,7 +33,7 @@ class Clean_dfdr(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   ac_reg = db.Column(db.String(10), nullable=False)
   flight_no = db.Column(db.String(10), nullable=False)
-  datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  datetime = db.Column(db.Date, nullable=False)
 
   def __repr__(self):
     return f"Clean_dfdr('{self.ac_reg}','{self.flight_no}','{self.datetime}')"

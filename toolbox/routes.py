@@ -72,6 +72,7 @@ def raw():
         ac_reg = dfdr_df.obtain_ac_reg()
         df_type = dfdr_df.dataframe_selection(ac_reg)
         dfdr_df.dfdr_tidy(dataframe_type=df_type)
+        print(dfdr_df.date)
         clean_dfdr = Clean_dfdr(ac_reg=dfdr_df.ac_reg, flight_no=dfdr_df.flight_no, datetime=dfdr_df.date)
         db.session.add(clean_dfdr)
         db.session.commit()
@@ -83,8 +84,7 @@ def raw():
 
         flash(
             f'The file {file.filename} was successfully uploaded!', 'success')
-        return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                               form=form, form_EDA=form_EDA, filename=filename, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+        return redirect(url_for('flapapp'))
 
     return redirect(url_for('flapapp'))
 
@@ -96,7 +96,7 @@ def launchEDA():
     form_EDA.registration.choices = [ (g.ac_reg) for g in Clean_dfdr.query.order_by('ac_reg').all()]
     form_EDA.flight_no.choices = [g.flight_no for g in Clean_dfdr.query.order_by('flight_no').all()]
     form_EDA.date.choices = [g.datetime for g in Clean_dfdr.query.order_by('datetime').all()]
-    if form.validate_on_submit() and 'file' in request.files:
+    if form_EDA.validate_on_submit():
         day = datetime.now().strftime("%A")
         date = datetime.now().strftime("%d")
         month = datetime.now().strftime("%B")
@@ -107,9 +107,9 @@ def launchEDA():
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        df = pd.read_csv(file)
-        df['DATETIME'] = pd.to_datetime(df['DATETIME'])
-        plot, plot2 = flapAsymPlot(df)
+        #df = pd.read_csv(file)
+        #df['DATETIME'] = pd.to_datetime(df['DATETIME'])
+        plot, plot2 = flapAsymPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
         plotTitle = plot.title.text
         plotTitle2 = plot2.title.text
         script, div = components(plot)
