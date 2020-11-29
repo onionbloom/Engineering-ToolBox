@@ -89,7 +89,7 @@ def raw():
     return redirect(url_for('flapapp'))
 
 
-@app.route('/download', methods=['POST'])
+@app.route('/launchEDA', methods=['POST'])
 def launchEDA():
     form = UploadForm()
     form_EDA = EDAForm()
@@ -102,29 +102,19 @@ def launchEDA():
         month = datetime.now().strftime("%B")
         year = datetime.now().strftime("%Y")
         time = datetime.now().strftime("%H:%M")
-        file = request.files.get('file')
-        # secure_filename secures any filename before storing into the system
-        filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        #df = pd.read_csv(file)
-        #df['DATETIME'] = pd.to_datetime(df['DATETIME'])
+        print(form_EDA.registration.data)
         plot, plot2 = flapAsymPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
         plotTitle = plot.title.text
         plotTitle2 = plot2.title.text
         script, div = components(plot)
         script2, div2 = components(plot2)
 
-        if file.filename == '':
-            flash('No selected file', 'warning')
-            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                   form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
-
-        flash(
-            f'The file {file.filename} was successfully uploaded!', 'success')
+        flash(f'You may now explore your data!', 'success')
         return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
                                div=div, script=script, plotTitle=plotTitle, div2=div2, script2=script2, plotTitle2=plotTitle2,
-                               form=form, form_EDA=form_EDA, filename=filename, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+                               form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
 
     return redirect(url_for('flapapp'))
 

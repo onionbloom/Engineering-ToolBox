@@ -36,8 +36,10 @@ def flapAsymPlot(registration, flight_no, date, output_folder):
                       formatters={'@DATETIME': 'datetime'},
                       mode='vline')
 
-    clean_dfdr_path = output_folder + registration + '_' + flight_no + '_' + date
+    clean_dfdr_path = output_folder + '/' + registration + '_' + flight_no + '_' + date + '/DFDR_Converter/dfdr_data_tidy.csv'
     dataframe = pd.read_csv(clean_dfdr_path)
+    dataframe['DATETIME'] = pd.to_datetime(dataframe['DATETIME'])
+    print(clean_dfdr_path)
     source = ColumnDataSource(dataframe)
     dataframe['TE_FLPSK1TO8_VAL'] = (
         dataframe['TE_FLAPSKW_1'] - dataframe['TE_FLAPSKW_8']).abs()
