@@ -55,6 +55,7 @@ class EDAForm(FlaskForm):
     registration = SelectField('Registration', id='registration', validate_choice=True)
     flight_no = SelectField('Flight Number', id='flight_no', validate_choice=True)
     date = SelectField('Date', id='date', validate_choice=True)
+    EDA_type = SelectField('Analysis Type', id='AType', choices=[('Asym','Flap Asymmetry'),('StabTrim','Stabilizer Trim')] , validate_choice=True)
     # No choices arguements are defined in this declaration as we will define them dynamically in the view functions in routes.py 
     submit = SubmitField('Launch EDA', _name='launchEDA')
 

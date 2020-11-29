@@ -13,7 +13,7 @@ class StabTrimAnalyser:
     isi di sini
     '''
 
-    def __init__(self, file_path=None, dataframe_type=None, output_path=None):
+    def __init__(self, file_path=None, dataframe_type='737-3B', output_path=None):
         # if dataframe_type == None:
         #     raise NameError('Please specify the Dataframe Type')
         # if file_path == None:
@@ -26,9 +26,7 @@ class StabTrimAnalyser:
 
         # read DFDR Data CSV
 
-        # self.dfdr_data = pd.read_csv(file_path, low_memory=False, index_col=0)
-
-        dfdr_data = file_path
+        dfdr_data = pd.read_csv(file_path, low_memory=False, index_col=0)
         self.dfdr_data = dfdr_data
         dfdr_data.index = dfdr_data.index.astype('int64')
         list_index = list(dfdr_data.index.values.tolist())
@@ -39,7 +37,7 @@ class StabTrimAnalyser:
 
         # importing the Dataframe Cross Reference Database
 
-        dataframedb_path = 'dataframe_db/param_crossref_{}.csv'.format(str.upper(dataframe_type))
+        dataframedb_path = './toolbox/data/dataframe_db/param_crossref_{}.csv'.format(str.upper(dataframe_type))
         self.df_dataframedb = pd.read_csv(dataframedb_path)
 
     def extract_dfdr_data(self):
@@ -52,6 +50,7 @@ class StabTrimAnalyser:
         col_mandatory = ['DATETIME', \
                  'AC_REG', \
                  'FLIGHT_NO']
+        dfdr_data['DATETIME'] = pd.to_datetime(dfdr_data['DATETIME'])
 
         col_cat = df_dataframedb.loc[df_dataframedb[category] == 'V', 'id_dataframe'].values.tolist()
         col_to_subset = col_mandatory + col_cat
@@ -98,7 +97,7 @@ class StabTrimAnalyser:
                 dfdr_data_sliced.loc[index, 'SIM_PITCHTRIMPOS'] = dfdr_data_sliced.loc[index - 1, 'SIM_PITCHTRIMPOS']
 
         # OUTPUT
-
+        """
         output_path = self.output_path
         date_early = dfdr_data.loc[1, 'DATETIME']
         self.date_early = date_early
@@ -119,8 +118,10 @@ class StabTrimAnalyser:
                     raise
         
         dfdr_data_sliced.to_csv(output_path_complete)
+        """
         return dfdr_data_sliced
 
+"""
     def plot_all(self, data=None, show_plot=True):
         fig, ax1 = plt.subplots(2, 1, sharex='all', figsize=[16, 9], dpi=166)
 
@@ -161,4 +162,6 @@ class StabTrimAnalyser:
 
         if show_plot == True:
             plt.show()
+
+"""
         

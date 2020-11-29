@@ -3,10 +3,11 @@ from bokeh.models import ColumnDataSource, HoverTool, PrintfTickFormatter, Categ
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
 from toolbox.plotStyle import plot_styler
+from toolbox.stab_trim_analyser import StabTrimAnalyser
 
 
-def stabTrimPlot(dataframe):
-    """ Description text here """
+def stabTrimPlot(registration, flight_no, date, output_folder):
+    """ Function to plot Stab Trim parameters """
     hover = HoverTool(tooltips=[('altitude', '@ALTITUDE'),
                                 ('time', '@DATETIME{%H:%M:%S}')],
                       # format time to H:M:S without the date. details: DatetimeTickFormatter
@@ -14,19 +15,50 @@ def stabTrimPlot(dataframe):
                       # display a tooltip whenever the cursor is vertically in line with a glyph
                       mode='vline')
 
+    clean_dfdr_path = output_folder + '/' + registration + '_' + \
+        flight_no + '_' + date + '/DFDR_Converter/dfdr_data_tidy.csv'
+
+    stab_trim_analyser = StabTrimAnalyser(file_path=clean_dfdr_path)
+
     mapper = CategoricalColorMapper(factors=['setosa', 'virginica', 'versicolor'],
                                     palette=['#247ba0', '#f25f5c', '#ffe066'])
 
-    source = ColumnDataSource(dataframe)
+    source = ColumnDataSource(stab_trim_analyser.extract_dfdr_data())
+    source2 = ColumnDataSource(stab_trim_analyser.extract_dfdr_data())
+
+    # Create the figures to house the plots
     plot = figure(title='Aircraft Flight Envelope', tools=[hover, 'pan', 'box_zoom', 'reset'],
                   x_axis_label='UTC Time (hh:mm:ss)', y_axis_label='Aircraft Altitude (ft)', x_axis_type='datetime')
+    plot2 = figure(title='Trim Commands', tools=['pan', 'box_zoom', 'wheel_zoom', 'save', 'reset'],
+                   x_axis_label='UTC Time (hh:mm:ss)', y_axis_label='Trim Command (Degrees)', x_axis_type='datetime')
+
+    # Adding line glyphs to the plots
+    plot.line(x='DATETIME', y='ALTITUDE', source=source,
+              line_width=2, color="#63B1EC")
+    l1 = plot2.line(x='DATETIME', y='TRIM_A_P_CD',
+                    source=source2, line_width=2, color='#3040c4')
+    l2 = plot2.line(x='DATETIME', y='TRIM_MAN_CD',
+                    source=source2, line_width=2, color='#70c1b3')
+
+    # Define a hovertool for each line and then add to plot
+    hover2_1 = HoverTool(tooltips=[('A/P Trim', '@TRIM_A_P_CD'),
+                                   ('Time', '@DATETIME{%H:%M:%S}')],
+                         formatters={'@DATETIME': 'datetime'},
+                         mode='vline',
+                         renderers=[l1])
+
+    hover2_2 = HoverTool(tooltips=[('Man Trim', '@TRIM_MAN_CD'),
+                                   ('Time', '@DATETIME{%H:%M:%S}')],
+                         formatters={'@DATETIME': 'datetime'},
+                         mode='vline',
+                         renderers=[l2])
+    
+    plot2.add_tools(hover2_1, hover2_2)
 
     plot_styler(plot)
+    plot_styler(plot2)
 
-    plot.line(x='DATETIME', y='ALTITUDE', source=source,
-              line_width=2, color="blue")
-
-    return plot
+    return plot, plot2
 
 
 def flapAsymPlot(registration, flight_no, date, output_folder):
@@ -36,10 +68,10 @@ def flapAsymPlot(registration, flight_no, date, output_folder):
                       formatters={'@DATETIME': 'datetime'},
                       mode='vline')
 
-    clean_dfdr_path = output_folder + '/' + registration + '_' + flight_no + '_' + date + '/DFDR_Converter/dfdr_data_tidy.csv'
+    clean_dfdr_path = output_folder + '/' + registration + '_' + \
+        flight_no + '_' + date + '/DFDR_Converter/dfdr_data_tidy.csv'
     dataframe = pd.read_csv(clean_dfdr_path)
     dataframe['DATETIME'] = pd.to_datetime(dataframe['DATETIME'])
-    print(clean_dfdr_path)
     source = ColumnDataSource(dataframe)
     dataframe['TE_FLPSK1TO8_VAL'] = (
         dataframe['TE_FLAPSKW_1'] - dataframe['TE_FLAPSKW_8']).abs()
@@ -62,13 +94,13 @@ def flapAsymPlot(registration, flight_no, date, output_folder):
     plot.line(x='DATETIME', y='ALTITUDE', source=source,
               line_width=2, color="#63B1EC")
     l1 = plot2.line(x='DATETIME', y='TE_FLPSK1TO8_VAL',
-               source=source2, line_width=2, color='#3040c4')
+                    source=source2, line_width=2, color='#3040c4')
     l2 = plot2.line(x='DATETIME', y='TE_FLPSK2TO7_VAL',
-               source=source2, line_width=2, color='#70c1b3')
+                    source=source2, line_width=2, color='#70c1b3')
     l3 = plot2.line(x='DATETIME', y='TE_FLPSK3TO6_VAL',
-               source=source2, line_width=2, color='#81b3a3')
+                    source=source2, line_width=2, color='#81b3a3')
     l4 = plot2.line(x='DATETIME', y='TE_FLPSK4TO5_VAL',
-               source=source2, line_width=2, color='#f36b7f')
+                    source=source2, line_width=2, color='#f36b7f')
 
     # Define the individual hover tools for each lines and then add them to the plot
     hover2_1 = HoverTool(tooltips=[('Skew 1-8', '@TE_FLPSK1TO8_VAL'),
