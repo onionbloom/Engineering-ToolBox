@@ -9,12 +9,12 @@
       <div class="card-body">
         <div class="row">
           <div class="col text-center py-4">
-            <i class="fas fa-file-csv fa-5x text-success-new" aria-hidden="true"></i>
+            <i class="fas fa-low-vision fa-5x text-black-30" aria-hidden="true"></i>
           </div>
         </div>
         <div class="row no-gutters align-items-center">
           <div class="col-12">
-            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">DFDR Data Parser</h6>
+            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Lorem Ipsum</h6>
           </div>
           <div class="col-12">
             <p class="card-text text-center">
@@ -31,16 +31,16 @@
       <div class="card-body">
         <div class="row">
           <div class="col text-center py-4">
-            <i class="fas fa-thermometer-full fa-5x text-black-30" aria-hidden="true"></i>
+            <i class="fas fa-file-medical-alt fa-5x text-success-new" aria-hidden="true"></i>
           </div>
         </div>
         <div class="row no-gutters align-items-center">
           <div class="col-12">
-            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Flap Asymmetry</h6>
+            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">FDR Graphical Readout</h6>
           </div>
           <div class="col-12">
             <p class="card-text text-center">
-              Id proident minim voluptate veniam non voluptate. Ut laborum aliquip pariatur laboris aliqua aute aute qui incididunt pariatur tempor anim. Et dolor qui anim enim.
+              This tool allows you to upload a raw DFDR .csv file(s) or choose previously uploaded files to generate exploratory data analyses. 
             </p>
           </div>
         </div>
@@ -49,20 +49,20 @@
   </div> <!-- Flap Asymmetry Card -->
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card card-dashboard mx-auto">
-      <a href="{{ url_for('flapapp') }}" class="stretched-link"></a>
+      <a href="#" class="stretched-link"></a>
       <div class="card-body">
         <div class="row">
           <div class="col text-center py-4">
-            <i class="fas fa-compass fa-5x text-black-30" aria-hidden="true"></i>
+            <i class="fas fa-chart-line fa-5x text-primary-new" aria-hidden="true"></i>
           </div>
         </div>
         <div class="row no-gutters align-items-center">
           <div class="col-12">
-            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Stabilizer Trim</h6>
+            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Life Data Analysis</h6>
           </div>
           <div class="col-12">
             <p class="card-text text-center">
-              Id proident minim voluptate veniam non voluptate. Ut laborum aliquip pariatur laboris aliqua aute aute qui incididunt pariatur tempor anim. Et dolor qui anim enim.
+              Predicting the most probable lifespan of an article based on statistical model to life data of a representative sample. 
             </p>
           </div>
         </div>
@@ -71,16 +71,16 @@
   </div> <!-- Stab Trim Card -->
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card card-dashboard mx-auto">
-      <a href="{{ url_for('flapapp') }}" class="stretched-link"></a>
+      <a href="#" class="stretched-link"></a>
       <div class="card-body">
         <div class="row">
           <div class="col text-center py-4">
-            <i class="fas fa-wind fa-5x text-black-30" aria-hidden="true"></i>
+            <i class="fas fa-low-vision fa-5x text-black-30" aria-hidden="true"></i>
           </div>
         </div>
         <div class="row no-gutters align-items-center">
           <div class="col-12">
-            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Bleed Monitoring</h6>
+            <h6 class="text-primary-new text-uppercase text-center font-weight-bold card-title mb-1">Lorem Ipsum</h6>
           </div>
           <div class="col-12">
             <p class="card-text text-center">
@@ -93,26 +93,4 @@
   </div> <!-- Bleed Monitoring Card -->
 </div> <!-- Application Cards -->
 
-<div class="row">
-  <div class="col-lg-12 col-xl-7 mb-4">
-    <div class="card">
-      <div class="card-header">
-        <h6 class="font-weight-bold text-primary-new m-0">{{ plotTitle }}</h6>
-      </div>
-      <div class="card-body">
-        {{ div | safe }}
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-12 col-xl-5 mb-4">
-    <div class="card">
-      <div class="card-header">
-        <h6 class="font-weight-bold text-primary-new m-0">Plot Title</h6>
-      </div>
-      <div class="card-body">
-
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock %}
