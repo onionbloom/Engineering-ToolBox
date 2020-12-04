@@ -52,8 +52,7 @@ class DfdrConverter:
 
         # importing DFDR Data from CSV
 
-        self.dfdr_data = pd.read_csv(
-            file, low_memory=False, index_col=0, sep=self.separator)
+        self.dfdr_data = pd.read_csv(file, low_memory=False, index_col=0)
 
         dataframedb = pd.read_csv(
             './toolbox/data/dataframe_db/dataframedb.csv', delimiter=';')
@@ -139,13 +138,7 @@ class DfdrConverter:
         else:
             dfdr_data['DAY'] = dfdr_data['DAY']
 
-        dfdr_data.loc[first_index, 'DATETIME'] = pd.to_datetime(dfdr_data.loc[first_index, 'YEAR']
-                                                                + '-' +
-                                                                dfdr_data.loc[first_index,
-                                                                              'MONTH']
-                                                                + '-' +
-                                                                dfdr_data.loc[first_index, 'DAY']
-                                                                + ' ' + dfdr_data.loc[first_index, 'GMT'])
+        dfdr_data.loc[first_index, 'DATETIME'] = pd.to_datetime(dfdr_data.loc[first_index, 'YEAR'] + '-' + dfdr_data.loc[first_index, 'MONTH'] + '-' + dfdr_data.loc[first_index, 'DAY']+ ' ' +  dfdr_data.loc[first_index, 'GMT'].astype(str), format='%Y-%m-%d %H%M.%S')
 
         delta_datetime = timedelta(seconds=1)
         for index, row in dfdr_data.iterrows():
