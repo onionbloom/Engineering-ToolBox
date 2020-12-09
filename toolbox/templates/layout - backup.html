@@ -21,46 +21,49 @@
 <body>
 
   <div id="mainContainer" class="accordion container-fluid d-flex flex-row">
-    <ul id="sidebar" class="nav flex-column sidebar" data-highlight-container="highlight-container">
-      <a class="sidebar-logo d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
-        <img src="static/icons/Logo_sidebar.png" alt="Logo">
-      </a>
-      <li class="nav-item">
-        {% if title == 'Dashboard' %}
-        <a class="nav-link {{ active }} d-lg-flex align-items-center" href="{{ url_for('dashboard') }}">
-          <svg class="cicon-dashboard {{ active }}" height="35" width="35" role="img" fill="currentColor"></svg>
-          {% else %}
-          <a href="{{ url_for('dashboard') }}" class="nav-link d-lg-flex align-items-center">
-            <svg class="cicon-dashboard" height="35" width="35" role="img" fill="currentColor">
-            </svg>
-            {% endif %}
-            <span>Dashboard</span>
-          </a>
-      </li> <!-- Dashboard -->
-      <li id="listOne" class="nav-item">
-        <a href="#" class="nav-link d-lg-flex align-items-center" data-toggle="collapse" data-target="#collapseLand"
-          aria-expanded="false" aria-controls="collapseLand">
-          <svg class="cicon-toolbox" height="35" width="35" role="img" fill="currentColor"></svg>
-          <span>Toolbox</span>
+    <div class="width collapse show" id="collapseSideBar">
+      <ul id="sidebar" class="nav flex-column sidebar" data-highlight-container="highlight-container">
+        <a class="sidebar-logo d-flex align-items-center justify-content-center" href="{{ url_for('dashboard') }}">
+          <img src="static/icons/Logo_sidebar.png" alt="Logo">
         </a>
-      </li>
-      <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listOne" data-parent="#sidebar">
-        <div class="card-body">
-          <div class="list-group">
-            <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
-            <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
+        <li class="nav-item">
+          {% if title == 'Dashboard' %}
+          <a class="nav-link {{ active }} d-lg-flex align-items-center" href="{{ url_for('dashboard') }}">
+            <svg class="cicon-dashboard {{ active }}" height="35" width="35" role="img" fill="currentColor"></svg>
+            {% else %}
+            <a href="{{ url_for('dashboard') }}" class="nav-link d-lg-flex align-items-center">
+              <svg class="cicon-dashboard" height="35" width="35" role="img" fill="currentColor">
+              </svg>
+              {% endif %}
+              <span>Dashboard</span>
+            </a>
+        </li> <!-- Dashboard -->
+        <li id="listOne" class="nav-item">
+          <a href="#" class="nav-link d-lg-flex align-items-center" data-toggle="collapse" data-target="#collapseLand"
+            aria-expanded="false" aria-controls="collapseLand">
+            <svg class="cicon-toolbox" height="35" width="35" role="img" fill="currentColor"></svg>
+            <span>Toolbox</span>
+          </a>
+        </li>
+        <div id="collapseLand" class="card mx-auto collapse" aria-labelledby="listOne" data-parent="#sidebar">
+          <div class="card-body">
+            <div class="list-group">
+              <button type="button" class="btn btn-primary btn-lg border-0">Create Report</button>
+              <button type="button" class="btn btn-primary btn-lg border-0">Stored Reports</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div data-highlight="highlight">
-        <img class="active-highlighter d-none" style="top: 148px;" src="/static/icons/navlink-active.png" alt="">
-      </div>
-    </ul> <!-- Sidebar -->
-
+        <div data-highlight="highlight">
+          <img class="active-highlighter d-none" style="top: 148px;" src="/static/icons/navlink-active.png" alt="">
+        </div>
+      </ul> <!-- Sidebar -->
+    </div>
+    
     <div id="contentContainer" class="container-fluid">
       <nav class="navbar navbar-expand navbar-light mb-4">
-        <button id="collapse-btn" type="button" class="btn border-0 shadow-none pl-0" data-toggle="button"
-          aria-pressed="false" autocomplete="off"><i class="fas fa-caret-left"></i></button>
+        <button id="collapse-btn" type="button" class="btn shadow-none" data-toggle="collapse" data-target="#collapseSideBar" aria-controls="collapseSideBar" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
         <form id="searchBar" class="form-inline mr-auto">
           <div class="input-group input-group-lg">
             <div class="input-group-prepend">
@@ -104,11 +107,6 @@
 
   </div> <!-- Main Container-->
 
-  <!-- Bokeh JS -->
-  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.1.min.js" crossorigin="anonymous"></script>
-
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -119,12 +117,20 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+
   <!-- Font Awesome-->
   <script src="https://kit.fontawesome.com/8416709509.js" crossorigin="anonymous"></script>
   <!-- Optional JavaScript -->
   <script type="text/javascript" src="/static/js/navHighlight.js"></script>
-  <script type="text/javascript" src="/static/js/collapse-sidebar.js"></script>
+  <!--<script type="text/javascript" src="/static/js/collapse-sidebar.js"></script>-->
   <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+  
+  <!-- Bokeh JS -->
+  {{ script | safe }}
+  {{ script2 | safe }}
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js" crossorigin="anonymous"></script>
 
 
 </body>

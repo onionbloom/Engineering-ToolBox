@@ -4,7 +4,6 @@ $(document).ready(function () {
 
     function collapseSidebar() {
         $('#sidebar').toggleClass('sidebar-collapsed');
-        $('#collapse-btn i').toggleClass('fa-caret-left fa-caret-right');
     }
 
 });
