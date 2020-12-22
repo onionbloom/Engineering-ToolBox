@@ -57,7 +57,8 @@ class EDAForm(FlaskForm):
     date = SelectField('Date', id='date', validate_choice=True)
     EDA_type = SelectField('Analysis Type', id='AType', choices=[('Asym','Flap Asymmetry'),('StabTrim','Stabilizer Trim')] , validate_choice=True)
     # No choices arguements are defined in this declaration as we will define them dynamically in the view functions in routes.py 
-    submit = SubmitField('Launch EDA', _name='launchEDA')
+    submit = SubmitField('Launch EDA')
+    download = SubmitField('Download')
 
 """
 class EDAForm(FlaskForm):

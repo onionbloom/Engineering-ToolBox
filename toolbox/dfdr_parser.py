@@ -52,7 +52,7 @@ class DfdrConverter:
 
         # importing DFDR Data from CSV
 
-        self.dfdr_data = pd.read_csv(file, low_memory=False, index_col=0)
+        self.dfdr_data = pd.read_csv(file, sep=';', low_memory=False, index_col=0)
 
         dataframedb = pd.read_csv(
             './toolbox/data/dataframe_db/dataframedb.csv', delimiter=';')

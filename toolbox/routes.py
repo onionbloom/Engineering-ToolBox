@@ -5,7 +5,7 @@ import pandas as pd
 from bokeh.embed import components
 from bokeh.sampledata.iris import flowers as df
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, url_for, send_file
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.utils import secure_filename
 
@@ -68,7 +68,7 @@ def raw():
         filename = secure_filename(file.filename)
         # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
         # get a clean and pandas friendly .csv, then upload it.
-        dfdr_df = DfdrConverter(file=file, output_path=app.config['UPLOAD_FOLDER'], filename=filename, separator=';')
+        dfdr_df = DfdrConverter(file=file, output_path=app.config['UPLOAD_FOLDER'], filename=filename, separator=',')
         ac_reg = dfdr_df.obtain_ac_reg()
         df_type = dfdr_df.dataframe_selection(ac_reg)
         dfdr_df.dfdr_tidy(dataframe_type=df_type)
@@ -89,7 +89,7 @@ def raw():
     return redirect(url_for('flapapp'))
 
 
-@app.route('/launchEDA', methods=['POST'])
+@app.route('/launchEDA', methods=['POST', 'GET'])
 def launchEDA():
     form = UploadForm()
     form_EDA = EDAForm()
@@ -97,34 +97,38 @@ def launchEDA():
     form_EDA.flight_no.choices = [g.flight_no for g in Clean_dfdr.query.order_by('flight_no').all()]
     form_EDA.date.choices = [g.datetime for g in Clean_dfdr.query.order_by('datetime').all()]
     if form_EDA.validate_on_submit():
-        day = datetime.now().strftime("%A")
-        date = datetime.now().strftime("%d")
-        month = datetime.now().strftime("%B")
-        year = datetime.now().strftime("%Y")
-        time = datetime.now().strftime("%H:%M")
-        # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
-        # get a clean and pandas friendly .csv, then upload it.
-        if form_EDA.EDA_type.data == 'Asym':
-            plot, plot2 = flapAsymPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
-            plotTitle = plot.title.text
-            plotTitle2 = plot2.title.text
-            script, div = components(plot)
-            script2, div2 = components(plot2)
-            flash(f'Below is your exploratory Flap Asymmetry analysis!', 'success')
-            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                div=div, script=script, plotTitle=plotTitle, div2=div2, script2=script2, plotTitle2=plotTitle2,
-                                form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
-        else:
-            plot, plot2 = stabTrimPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
-            plotTitle = plot.title.text
-            plotTitle2 = plot2.title.text
-            script, div = components(plot)
-            script2, div2 = components(plot2)
+        if not form_EDA.download.data:
+            day = datetime.now().strftime("%A")
+            date = datetime.now().strftime("%d")
+            month = datetime.now().strftime("%B")
+            year = datetime.now().strftime("%Y")
+            time = datetime.now().strftime("%H:%M")
+            # Convert the FileStorage object from the request into a pandas dataframe and parse through the data to
+            # get a clean and pandas friendly .csv, then upload it.
+            if form_EDA.EDA_type.data == 'Asym':
+                plot, plot2 = flapAsymPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
+                plotTitle = plot.title.text
+                plotTitle2 = plot2.title.text
+                script, div = components(plot)
+                script2, div2 = components(plot2)
+                flash(f'Below is your exploratory Flap Asymmetry analysis!', 'success')
+                return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                                    div=div, script=script, plotTitle=plotTitle, div2=div2, script2=script2, plotTitle2=plotTitle2,
+                                    form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+            else:
+                plot, plot2 = stabTrimPlot(registration=form_EDA.registration.data, flight_no=form_EDA.flight_no.data, date=form_EDA.date.data, output_folder=app.config['UPLOAD_FOLDER'])
+                plotTitle = plot.title.text
+                plotTitle2 = plot2.title.text
+                script, div = components(plot)
+                script2, div2 = components(plot2)
 
-            flash(f'Below is your exploratory Stabilizer Trim Event analysis!', 'success')
-            return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
-                                div=div, script=script, plotTitle=plotTitle,  div2=div2, script2=script2, plotTitle2=plotTitle2,
-                                form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+                flash(f'Below is your exploratory Stabilizer Trim Event analysis!', 'success')
+                return render_template('flapapp.html', active='active', edaLaunchable='true', title='Flap Event Analysis - Create Report',
+                                    div=div, script=script, plotTitle=plotTitle,  div2=div2, script2=script2, plotTitle2=plotTitle2,
+                                    form=form, form_EDA=form_EDA, username=current_user.username, day=day, date=date, month=month, year=year, time=time)
+        elif not form_EDA.submit.data:
+            clean_dfdr_path = 'uploads\\' + form_EDA.registration.data + '_' + form_EDA.flight_no.data + '_' + form_EDA.date.data + '\\DFDR_Converter\\dfdr_data_tidy.csv'
+            return send_file(clean_dfdr_path, as_attachment=True)
 
     return redirect(url_for('flapapp'))
 
