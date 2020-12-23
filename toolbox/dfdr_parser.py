@@ -138,7 +138,7 @@ class DfdrConverter:
         else:
             dfdr_data['DAY'] = dfdr_data['DAY']
 
-        dfdr_data.loc[first_index, 'DATETIME'] = pd.to_datetime(dfdr_data.loc[first_index, 'YEAR'] + '-' + dfdr_data.loc[first_index, 'MONTH'] + '-' + dfdr_data.loc[first_index, 'DAY']+ ' ' +  dfdr_data.loc[first_index, 'GMT'].astype(str), format='%Y-%m-%d %H%M.%S')
+        dfdr_data.loc[first_index, 'DATETIME'] = pd.to_datetime(dfdr_data.loc[first_index, 'YEAR'] + '-' + dfdr_data.loc[first_index, 'MONTH'] + '-' + dfdr_data.loc[first_index, 'DAY']+ ' ' +  dfdr_data.loc[first_index, 'GMT'], format='%Y-%m-%d %H:%M:%S')
 
         delta_datetime = timedelta(seconds=1)
         for index, row in dfdr_data.iterrows():
