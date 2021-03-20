@@ -1,2 +1,2 @@
 # Run the Flask Web app
-web: gunicorn gettingstarted.wsgi
+web: gunicorn app:run
